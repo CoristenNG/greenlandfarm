@@ -1,7 +1,15 @@
 import React from "react";
-import { Facebook, Instagram, Linkedin, PhoneCall, MapPin, Mail } from "lucide-react";
-import Logo from "../assets/urbanLogo.png"; 
-import Sub from "../assets/subMail.png"; // Assuming you have a subscription icon
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  PhoneCall,
+  MapPin,
+  Mail,
+  Heart,
+} from "lucide-react";
+import Logo from "../assets/urbanLogo.png";
+import Sub from "../assets/subMail.png";
 
 const Footer = () => {
   return (
@@ -10,7 +18,7 @@ const Footer = () => {
       <div className="newsletter">
         <div className="newsletter-left">
           <img src={Sub} alt="Subscibe mail icon" className="icon" />
-         {/* <Mail className="icon" size={48} /> */}
+          {/* <Mail className="icon" size={48} /> */}
           <div>
             <h3>Subscribe to our Newsletter</h3>
             <p>
@@ -28,11 +36,7 @@ const Footer = () => {
       {/* Footer Main Content */}
       <div className="footer-main">
         <div className="footer-column brand">
-          <img
-            src={Logo}
-            alt="Urban Lagos Logo"
-            className="logo"
-          />
+          <img src={Logo} alt="Urban Lagos Logo" className="logo" />
           <p>
             Feeding Lagos and beyond with farm-fresh, responsibly grown produce
             and ethically raised animals.
@@ -119,19 +123,19 @@ const Footer = () => {
         <div className="footer-column">
           <h4>Information</h4>
           <ul className="contact-info">
-  <li>
-    <MapPin size={16} className="contact-icon" /> 
-    Elerangbe Epe, Lagos State, Nigeria
-  </li>
-  <li>
-    <PhoneCall size={16} className="contact-icon" /> 
-    +234 (801) 234 4567
-  </li>
-  <li>
-    <Mail size={16} className="contact-icon" /> 
-    hello@greenlandfarms.ng
-  </li>
-</ul>
+            <li>
+              <MapPin size={16} className="contact-icon" />
+              Elerangbe Epe, Lagos State, Nigeria
+            </li>
+            <li>
+              <PhoneCall size={16} className="contact-icon" />
+              +234 (801) 234 4567
+            </li>
+            <li>
+              <Mail size={16} className="contact-icon" />
+              hello@greenlandfarms.ng
+            </li>
+          </ul>
         </div>
       </div>
 
@@ -139,7 +143,7 @@ const Footer = () => {
       <div className="footer-bottom">
         <p>© 2025 Urban Lagos Greenlandfarms Ltd. All rights reserved.</p>
         <p>
-          Made with <span className="heart">💚</span> in Nigeria | Powered by
+          Made with <span className="heart"><Heart className="icon" size={16} /></span> in Nigeria | Powered by
           Nature & Tech
         </p>
       </div>
@@ -184,7 +188,7 @@ const Footer = () => {
         }
 
         .newsletter-left .icon {
-          color: #79A637;
+          color: #79a637;
           margin-top: 10px;
         }
 
@@ -197,18 +201,18 @@ const Footer = () => {
         }
 
         .newsletter-right input {
-        width: 100%;
+          width: 100%;
           // flex: 1;
           padding: 0.5rem 1rem;
           border: none;
           border-radius: 5px;
           outline: none;
           max-width: 200px;
-          font-size: 16px; 
+          font-size: 16px;
         }
 
         .newsletter-right button {
-          background-color: #79A637;
+          background-color: #79a637;
           border: none;
           color: white;
           padding: 0.5rem 1.2rem;
@@ -295,15 +299,15 @@ const Footer = () => {
           color: white;
         }
 
-       .contact-info .contact-icon {
-  margin-right: 0.5rem;
-  color: #828282;
-  vertical-align: middle;
-}
+        .contact-info .contact-icon {
+          margin-right: 0.5rem;
+          color: #828282;
+          vertical-align: middle;
+        }
 
-.contact-info li{
-color: #828282
-}
+        .contact-info li {
+          color: #828282;
+        }
         /* === Footer Bottom === */
         .footer-bottom {
           background-color: white;

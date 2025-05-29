@@ -15,7 +15,6 @@ const Navbar = () => {
       {/* Top Green Header Bar */}
       <div className="top-header-bar">
         <div className="container">
-          {/* This can contain promotional text, contact info, etc. */}
         </div>
       </div>
 
@@ -23,7 +22,6 @@ const Navbar = () => {
       <div className="main-nav-bar">
         <div className="container">
           <div className="nav-content">
-            {/* Logo */}
             <div className="logo">
               <img src={Logo} alt="Urban Lagos Logo" className="logo-image" />
             </div>
