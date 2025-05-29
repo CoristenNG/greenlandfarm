@@ -14,8 +14,7 @@ const Navbar = () => {
     <div className="navbar-container">
       {/* Top Green Header Bar */}
       <div className="top-header-bar">
-        <div className="container">
-        </div>
+        <div className="container"></div>
       </div>
 
       {/* Main Navigation Section */}
@@ -27,7 +26,7 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Navigation */}
-           <nav className="desktop-nav">
+            <nav className="desktop-nav">
               <Link to="/" className="nav-link">
                 Home
               </Link>
@@ -81,7 +80,7 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="mobile-menu">
           <div className="mobile-menu-content">
-              <nav className="mobile-nav">
+            <nav className="mobile-nav">
               <Link to="/" className="mobile-nav-link">
                 Home
               </Link>

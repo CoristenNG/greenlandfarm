@@ -38,8 +38,8 @@ const Footer = () => {
         <div className="footer-column brand">
           <img src={Logo} alt="Urban Lagos Logo" className="logo" />
           <p>
-            Feeding Lagos and beyond with farm-fresh, responsibly grown produce
-            and ethically raised animals.
+            Feeding Lagos and beyond with farm-fresh, responsibly <br /> grown
+            produce and ethically raised animals.
           </p>
           <div className="social-icons">
             <a href="#">
@@ -57,85 +57,87 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="footer-column">
-          <h4>Explore</h4>
-          <ul>
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">Shop</a>
-            </li>
-            <li>
-              <a href="#">Track Order</a>
-            </li>
-            <li>
-              <a href="#">About Us</a>
-            </li>
-            <li>
-              <a href="#">Contact Us</a>
-            </li>
-          </ul>
-        </div>
+        <div className="footer-submain">
+          <div className="footer-column">
+            <h4>Explore</h4>
+            <ul>
+              <li>
+                <a href="#">Home</a>
+              </li>
+              <li>
+                <a href="#">Shop</a>
+              </li>
+              <li>
+                <a href="#">Track Order</a>
+              </li>
+              <li>
+                <a href="#">About Us</a>
+              </li>
+              <li>
+                <a href="#">Contact Us</a>
+              </li>
+            </ul>
+          </div>
 
-        <div className="footer-column">
-          <h4>Shop By Category</h4>
-          <ul>
-            <li>
-              <a href="#">Crops</a>
-            </li>
-            <li>
-              <a href="#">Vegetables</a>
-            </li>
-            <li>
-              <a href="#">Fishes</a>
-            </li>
-            <li>
-              <a href="#">Poultry</a>
-            </li>
-            <li>
-              <a href="#">Animal Products</a>
-            </li>
-          </ul>
-        </div>
+          <div className="footer-column">
+            <h4>Shop By Category</h4>
+            <ul>
+              <li>
+                <a href="#">Crops</a>
+              </li>
+              <li>
+                <a href="#">Vegetables</a>
+              </li>
+              <li>
+                <a href="#">Fishes</a>
+              </li>
+              <li>
+                <a href="#">Poultry</a>
+              </li>
+              <li>
+                <a href="#">Animal Products</a>
+              </li>
+            </ul>
+          </div>
 
-        <div className="footer-column">
-          <h4>Support</h4>
-          <ul>
-            <li>
-              <a href="#">FAQs</a>
-            </li>
-            <li>
-              <a href="#">Delivery Info</a>
-            </li>
-            <li>
-              <a href="#">Returns Policy</a>
-            </li>
-            <li>
-              <a href="#">Terms & Conditions</a>
-            </li>
-            <li>
-              <a href="#">Privacy Policy</a>
-            </li>
-          </ul>
-        </div>
+          <div className="footer-column">
+            <h4>Support</h4>
+            <ul>
+              <li>
+                <a href="#">FAQs</a>
+              </li>
+              <li>
+                <a href="#">Delivery Info</a>
+              </li>
+              <li>
+                <a href="#">Returns Policy</a>
+              </li>
+              <li>
+                <a href="#">Terms & Conditions</a>
+              </li>
+              <li>
+                <a href="#">Privacy Policy</a>
+              </li>
+            </ul>
+          </div>
 
-        <div className="footer-column">
-          <h4>Information</h4>
-          <ul className="contact-info">
-            <li>
-              <MapPin size={16} className="contact-icon" />
-              Elerangbe Epe, Lagos State, Nigeria
-            </li>
-            <li>
-              <PhoneCall size={16} className="contact-icon" />
-              +234 (801) 234 4567
-            </li>
-            <li>
-              <Mail size={16} className="contact-icon" />
-              hello@greenlandfarms.ng
-            </li>
-          </ul>
+          <div className="footer-column">
+            <h4>Information</h4>
+            <ul className="contact-info">
+              <li>
+                <MapPin size={16} className="contact-icon" />
+                Elerangbe Epe, Lagos State, Nigeria
+              </li>
+              <li>
+                <PhoneCall size={16} className="contact-icon" />
+                +234 (801) 234 4567
+              </li>
+              <li>
+                <Mail size={16} className="contact-icon" />
+                hello@greenlandfarms.ng
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -143,8 +145,11 @@ const Footer = () => {
       <div className="footer-bottom">
         <p>© 2025 Urban Lagos Greenlandfarms Ltd. All rights reserved.</p>
         <p>
-          Made with <span className="heart"><Heart className="icon" size={16} /></span> in Nigeria | Powered by
-          Nature & Tech
+          Made with{" "}
+          <span className="heart">
+            <Heart className="heart-icon" size={16} />
+          </span>{" "}
+          in Nigeria | Powered by Nature & Tech
         </p>
       </div>
 
@@ -192,6 +197,10 @@ const Footer = () => {
           margin-top: 10px;
         }
 
+        .heart-icon {
+          color: #79a637;
+        }
+
         .newsletter-right {
           width: 100%;
           display: flex;
@@ -227,18 +236,35 @@ const Footer = () => {
 
         /* === Footer Main Content === */
         .footer-main {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 2rem;
-          padding: 3rem 2rem;
+          display: flex;
+          padding: 4rem 2rem;
           background-color: #e5e7eb;
-          text-align: left;
+          margin: 0 auto;
+          gap: 4rem;
+        }
+
+        .footer-submain {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 2rem;
+          flex: 1;
+        }
+
+        .footer-column {
+          flex: 1;
+          min-width: 160px;
+        }
+
+        .footer-column.brand {
+          flex: 1.5;
+          max-width: 300px;
         }
 
         .footer-column h4 {
-          font-size: 1rem;
-          margin-bottom: 1rem;
-          font-weight: bold;
+          font-size: 1.125rem;
+          margin-bottom: 1.5rem;
+          font-weight: 600;
+          color: #1f2937;
           text-align: left;
         }
 
@@ -246,6 +272,9 @@ const Footer = () => {
           list-style: none;
           padding: 0;
           margin: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 0.3rem;
         }
 
         .footer-column ul li {
@@ -273,6 +302,7 @@ const Footer = () => {
           font-size: 0.875rem;
           color: #828282;
           margin-bottom: 1rem;
+          text-align: left;
         }
 
         /* === Social Icons === */
@@ -320,11 +350,20 @@ const Footer = () => {
           color: #828282;
         }
 
-        .footer-bottom .heart {
-          color: #65a30d;
+        /* === Responsive Breakpoints === */
+
+        @media (max-width: 1024px) {
+          .footer-main {
+            padding: 3rem 2rem;
+            gap: 3rem;
+          }
+
+          .footer-submain {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+          }
         }
 
-        /* === Responsive Breakpoints === */
         @media (max-width: 768px) {
           .newsletter {
             padding: 2rem 1.5rem;
@@ -349,8 +388,17 @@ const Footer = () => {
           }
 
           .footer-main {
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            flex-direction: column;
             padding: 2rem 1.5rem;
+            gap: 2rem;
+          }
+
+          .footer-column.brand {
+            max-width: 100%;
+          }
+
+          .footer-submain {
+            grid-template-columns: repeat(2, 1fr);
           }
 
           .footer-bottom {
@@ -392,6 +440,20 @@ const Footer = () => {
 
           .brand img.logo {
             height: 32px;
+          }
+
+          .footer-main {
+            padding: 2rem 1rem;
+          }
+
+          .footer-submain {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+
+          .footer-column h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
           }
         }
       `}</style>
