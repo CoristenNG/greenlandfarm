@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
-import Shop from "../assets/shopImg.png";
+import ShopImg from "../assets/shopImg.png";
 import AllCategories from "../assets/allCate.png";
 import Maize from "../assets/maize.png";
 import Poultry from "../assets/poultry.png";
@@ -13,7 +14,7 @@ import Pepper from "../assets/allPepper.png";
 import Round from "../assets/allRoundPepper.png";
 import Tomato from "../assets/allTomato.png";
 
-function Home() {
+function ShopPage() {
   const categories = [
     { icon: Vegetables, label: "Vegetables", active: true },
     { icon: Maize, label: "Root vegetables" },
@@ -36,7 +37,7 @@ function Home() {
     {
       id: 2,
       name: "Fresh red pepper",
-       package: "vegetables",
+      package: "vegetables",
       price: "₦ 3,000.00",
       quantity: "1 kg",
       image: Round,
@@ -46,7 +47,7 @@ function Home() {
       id: 3,
       name: "Fresh red beans",
       price: "₦ 2,000.00",
-       package: "Egg",
+      package: "Egg",
       quantity: "1 kg",
       image: Egg,
       category: "vegetables",
@@ -73,7 +74,7 @@ function Home() {
       id: 6,
       name: "Fresh vegetables",
       price: "₦ 3,000.00",
-       package: "vegetables",
+      package: "vegetables",
       quantity: "1 kg",
       image: Pepper,
       category: "vegetables",
@@ -82,7 +83,7 @@ function Home() {
       id: 7,
       name: "Fresh vegetables",
       price: "₦ 3,000.00",
-       package: "vegetables",
+      package: "vegetables",
       quantity: "1 kg",
       image: Pepper,
       category: "vegetables",
@@ -90,7 +91,7 @@ function Home() {
     {
       id: 8,
       name: "Fresh vegetables",
-       package: "vegetables",
+      package: "vegetables",
       price: "₦ 3,000.00",
       quantity: "1 kg",
       image: Pepper,
@@ -108,7 +109,7 @@ function Home() {
     {
       id: 10,
       name: "Fresh vegetables",
-       package: "vegetables",
+      package: "vegetables",
       price: "₦ 3,000.00",
       quantity: "1 kg",
       image: Pepper,
@@ -158,25 +159,30 @@ function Home() {
           {/* Products Grid */}
           <div className="products-grid">
             {products.map((product) => (
-              <div key={product.id} className="product-card">
-                {product.quantity && (
-                  <div className="product-quantity">{product.quantity}</div>
-                )}
-                <div className="product-image">
-                  <img src={product.image} alt={product.name} />
-                </div>
-
-                <div className="product-footer">
-                  <div className="price-container">
-                    <span className="price-label">{product.package}</span>
-                    <h3 className="product-name">{product.name}</h3>
-                    <span className="product-price">{product.price}</span>
+              <Link
+                to={`/product/${product.id}`}
+                key={product.id}
+                className="product-link"
+              >
+                <div className="product-card">
+                  {product.quantity && (
+                    <div className="product-quantity">{product.quantity}</div>
+                  )}
+                  <div className="product-image">
+                    <img src={product.image} alt={product.name} />
                   </div>
-                  <button className="cart-icon">
-                    <ShoppingCart size={16} />
-                  </button>
+                  <div className="product-footer">
+                    <div className="price-container">
+                      <span className="price-label">{product.package}</span>
+                      <h3 className="product-name">{product.name}</h3>
+                      <span className="product-price">{product.price}</span>
+                    </div>
+                    <button className="cart-icon">
+                      <ShoppingCart size={16} />
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -192,7 +198,7 @@ function Home() {
         .hero {
           height: 300px;
           background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-            url(${Shop});
+            url(${ShopImg});
           background-size: cover;
           background-position: center;
           display: flex;
@@ -319,18 +325,24 @@ function Home() {
           position: relative;
         }
 
+        .product-link {
+          text-decoration: none;
+          color: inherit;
+          display: block;
+        }
+
         .product-quantity {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    color: black;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    z-index: 1;
-    transition: opacity 0.3s ease;
-  }
+          position: absolute;
+          top: 5px;
+          left: 5px;
+          color: black;
+          padding: 4px 8px;
+          border-radius: 12px;
+          font-size: 0.75rem;
+          font-weight: 500;
+          z-index: 1;
+          transition: opacity 0.3s ease;
+        }
 
         .product-image {
           margin-bottom: 10px;
@@ -411,4 +423,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default ShopPage;
