@@ -274,11 +274,6 @@ function Home() {
           color: white;
         }
 
-        .category-card:not(.active):hover {
-          background-color: #f5f5f5;
-          transform: translateY(-2px);
-        }
-
         .category-icon {
           margin-bottom: 10px;
         }
@@ -336,11 +331,6 @@ function Home() {
     z-index: 1;
     transition: opacity 0.3s ease;
   }
-
-        .product-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-        }
 
         .product-image {
           margin-bottom: 10px;
