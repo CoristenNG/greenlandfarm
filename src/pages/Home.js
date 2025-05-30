@@ -27,14 +27,18 @@ function Home() {
     {
       id: 1,
       name: "Fresh bell pepper",
+      package: "vegetables",
       price: "₦ 3,000.00",
+      quantity: "1 kg",
       image: Pepper,
       category: "vegetables",
     },
     {
       id: 2,
       name: "Fresh red pepper",
+       package: "vegetables",
       price: "₦ 3,000.00",
+      quantity: "1 kg",
       image: Round,
       category: "vegetables",
     },
@@ -42,6 +46,8 @@ function Home() {
       id: 3,
       name: "Fresh red beans",
       price: "₦ 2,000.00",
+       package: "Egg",
+      quantity: "1 kg",
       image: Egg,
       category: "vegetables",
     },
@@ -49,6 +55,8 @@ function Home() {
       id: 4,
       name: "Fresh tomato (medium)",
       price: "₦ 3,000.00",
+      package: "vegetables",
+      quantity: "1 kg",
       image: Tomato,
       category: "vegetables",
     },
@@ -56,6 +64,8 @@ function Home() {
       id: 5,
       name: "Fresh live chicken",
       price: "₦ 5,000.00",
+      package: "Egg",
+      quantity: "1 kg",
       image: Egg,
       category: "others",
     },
@@ -63,6 +73,8 @@ function Home() {
       id: 6,
       name: "Fresh vegetables",
       price: "₦ 3,000.00",
+       package: "vegetables",
+      quantity: "1 kg",
       image: Pepper,
       category: "vegetables",
     },
@@ -70,13 +82,17 @@ function Home() {
       id: 7,
       name: "Fresh vegetables",
       price: "₦ 3,000.00",
+       package: "vegetables",
+      quantity: "1 kg",
       image: Pepper,
       category: "vegetables",
     },
     {
       id: 8,
       name: "Fresh vegetables",
+       package: "vegetables",
       price: "₦ 3,000.00",
+      quantity: "1 kg",
       image: Pepper,
       category: "vegetables",
     },
@@ -84,13 +100,17 @@ function Home() {
       id: 9,
       name: "Fresh mixed vegetable",
       price: "₦ 2,000.00",
+      package: "Egg",
+      quantity: "1 kg",
       image: Crate,
       category: "vegetables",
     },
     {
       id: 10,
       name: "Fresh vegetables",
+       package: "vegetables",
       price: "₦ 3,000.00",
+      quantity: "1 kg",
       image: Pepper,
       category: "vegetables",
     },
@@ -139,14 +159,16 @@ function Home() {
           <div className="products-grid">
             {products.map((product) => (
               <div key={product.id} className="product-card">
-                <div className="product-number">{product.id}</div>
+                {product.quantity && (
+                  <div className="product-quantity">{product.quantity}</div>
+                )}
                 <div className="product-image">
                   <img src={product.image} alt={product.name} />
                 </div>
 
                 <div className="product-footer">
                   <div className="price-container">
-                    <span className="price-label">Price</span>
+                    <span className="price-label">{product.package}</span>
                     <h3 className="product-name">{product.name}</h3>
                     <span className="product-price">{product.price}</span>
                   </div>
@@ -237,7 +259,7 @@ function Home() {
         }
 
         .category-card {
-          background-color: white;
+          background-color: #e8f2f3;
           color: #333;
           padding: 20px;
           border-radius: 10px;
@@ -245,7 +267,6 @@ function Home() {
           cursor: pointer;
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
           transition: all 0.3s ease;
-          border: 1px solid #e0e0e0;
         }
 
         .category-card.active {
@@ -293,33 +314,28 @@ function Home() {
         }
 
         .product-card {
-          background-color: white;
+          background-color: #f5f5f5;
           border-radius: 10px;
           padding: 15px;
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
           text-align: center;
           cursor: pointer;
           transition: transform 0.3s ease, box-shadow 0.3s ease;
-          border: 1px solid #e0e0e0;
           position: relative;
         }
 
-        .product-number {
-          position: absolute;
-          top: 5px;
-          left: 5px;
-          background-color: #4caf50;
-          color: white;
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 0.8rem;
-          font-weight: 500;
-          z-index: 1;
-        }
+        .product-quantity {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: black;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
 
         .product-card:hover {
           transform: translateY(-5px);
@@ -339,74 +355,67 @@ function Home() {
           object-fit: cover;
         }
 
-       .product-name {
-    font-size: 0.85rem;
-    color: #333;
-    font-weight: 500;
-    margin: 0;
-    text-align: left;
-    line-height: 1.2;
-    max-width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
+        .product-name {
+          font-size: 0.85rem;
+          color: #333;
+          font-weight: 500;
+          margin: 0;
+          text-align: left;
+          line-height: 1.2;
+          max-width: 150px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
 
-         .product-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding-top: 10px;
-    border-top: 1px solid #eee;
-    margin-top: 10px;
-  }
+        .product-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          padding-top: 10px;
+          border-top: 1px solid #eee;
+          margin-top: 10px;
+        }
 
-     .product-price {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #4caf50;
-    margin-bottom: 5px;
-  }
+        .product-price {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #4caf50;
+          margin-bottom: 5px;
+        }
 
+        .price-container {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          flex: 1;
+          margin-right: 10px;
+        }
 
-       .price-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex: 1;
-    margin-right: 10px;
-  }
+        .price-label {
+          font-size: 0.7rem;
+          color: #666;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 2px;
+        }
 
-     .price-label {
-    font-size: 0.7rem;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 2px;
-  }
-
-         .cart-icon {
-    margin-left: auto;
-    align-self: flex-end;
-    background-color: #4caf50;
-    color: white;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-         .cart-icon:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-  }
+        .cart-icon {
+          margin-left: auto;
+          align-self: flex-end;
+          color: black;
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: none;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          background: none;
+        }
       `}</style>
     </>
   );
