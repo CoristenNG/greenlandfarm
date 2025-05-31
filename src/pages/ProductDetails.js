@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   ShoppingCart,
   Heart,
@@ -13,8 +14,12 @@ import {
   ThumbsUp,
   ThumbsDown,
 } from "lucide-react";
-import Rec from "../assets/shopRec.png";
-import Pepper from "../assets/allPepper.png"; // Assuming you have an image for the pepper
+import "../styles/ProductDetails.css"; 
+import Egg from "../assets/allEgg.png";
+import Pepper from "../assets/allPepper.png";
+import Round from "../assets/allRoundPepper.png";
+import Tomato from "../assets/allTomato.png";
+import Rec from "../assets/shopRec.png"; // Assuming you have an image for the pepper
 
 const BellPepperProduct = () => {
   const { id } = useParams();
@@ -49,6 +54,54 @@ const BellPepperProduct = () => {
   const tabs = [
     { id: "description", label: "Detailed Description / Benefits" },
     { id: "reviews", label: "Reviews and Testimonials" },
+  ];
+
+  const products = [
+    {
+      id: 1,
+      name: "Fresh bell pepper",
+      package: "vegetables",
+      price: "₦ 3,000.00",
+      quantity: "1 kg",
+      image: Pepper,
+      category: "vegetables",
+    },
+    {
+      id: 2,
+      name: "Fresh red pepper",
+      package: "vegetables",
+      price: "₦ 3,000.00",
+      quantity: "1 kg",
+      image: Round,
+      category: "vegetables",
+    },
+    {
+      id: 3,
+      name: "Fresh red beans",
+      price: "₦ 2,000.00",
+      package: "Egg",
+      quantity: "1 kg",
+      image: Egg,
+      category: "vegetables",
+    },
+    {
+      id: 4,
+      name: "Fresh tomato",
+      price: "₦ 3,000.00",
+      package: "vegetables",
+      quantity: "1 kg",
+      image: Tomato,
+      category: "vegetables",
+    },
+    {
+      id: 5,
+      name: "Fresh live chicken",
+      price: "₦ 5,000.00",
+      package: "Egg",
+      quantity: "1 kg",
+      image: Egg,
+      category: "others",
+    },
   ];
 
   return (
@@ -269,12 +322,12 @@ const BellPepperProduct = () => {
                             />
                           ))}
                         </div>
-                       <div className="star-division">
-                         <span className="reviewer-name">Chinedu O.</span>
-                        <span className="review-date">
-                          05 - 05 - 2025 | 7:02 PM
-                        </span>
-                       </div>
+                        <div className="star-division">
+                          <span className="reviewer-name">Chinedu O.</span>
+                          <span className="review-date">
+                            05 - 05 - 2025 | 7:02 PM
+                          </span>
+                        </div>
                       </div>
                       <p className="review-text">
                         These bell peppers are always vibrant green and firm. I
@@ -308,9 +361,9 @@ const BellPepperProduct = () => {
                         </div>
                         <div className="star-division">
                           <span className="reviewer-name">Aisha M.</span>
-                        <span className="review-date">
-                          04 - 05 - 2025 | 8:02 PM
-                        </span>
+                          <span className="review-date">
+                            04 - 05 - 2025 | 8:02 PM
+                          </span>
                         </div>
                       </div>
                       <p className="review-text">
@@ -410,546 +463,45 @@ const BellPepperProduct = () => {
         </div>
       </div>
 
-      {/* Product Specifications */}
+      {/* All Categories Link */}
+      <div className="all-categories">
+        <a href="#" className="all-categories-link">
+          Related Products
+        </a>
+      </div>
+
+      {/* Products Grid */}
+      <div className="products-grid">
+        {products.map((product) => (
+          <Link
+            to={`/product/${product.id}`}
+            key={product.id}
+            className="product-link"
+          >
+            <div className="product-card">
+              {product.quantity && (
+                <div className="product-quantity">{product.quantity}</div>
+              )}
+              <div className="product-image">
+                <img src={product.image} alt={product.name} />
+              </div>
+              <div className="product-footer">
+                <div className="price-container">
+                  <span className="price-label">{product.package}</span>
+                  <h3 className="product-name">{product.name}</h3>
+                  <span className="product-price">{product.price}</span>
+                </div>
+                <button className="cart-icon">
+                  <ShoppingCart size={16} />
+                </button>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      <button className="view-more-btn">View More →</button>
 
-      <style jsx>{`
-        .product-page {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 20px 5%;
-          width: 100%;
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-            sans-serif;
-        }
-
-        .product-container {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 40px;
-          margin-bottom: 40px;
-        }
-
-        /* Image Section */
-        .product-images {
-          display: flex;
-          gap: 20px;
-        }
-
-        .thumbnail-list {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-
-        .thumbnail {
-          width: 60px;
-          height: 60px;
-          border: 2px solid #e0e0e0;
-          border-radius: 8px;
-          overflow: hidden;
-          cursor: pointer;
-          transition: border-color 0.3s;
-        }
-
-        .thumbnail.active {
-          border-color: #4caf50;
-        }
-
-        .thumbnail img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-
-        .main-image {
-          flex: 1;
-          max-width: 400px;
-        }
-
-        .main-image img {
-          width: 100%;
-          height: auto;
-          border-radius: 12px;
-        }
-
-        /* Product Info */
-        .product-info {
-          padding: 20px 0;
-          text-align: left;
-        }
-
-        .product-title {
-          font-size: 28px;
-          font-weight: 600;
-          color: #333;
-          margin: 0 0 10px 0;
-        }
-
-        .product-price {
-          font-size: 24px;
-          color: #4caf50;
-          font-weight: 600;
-          margin-bottom: 15px;
-        }
-
-        .rating-section {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin-bottom: 20px;
-        }
-
-        .stars {
-          display: flex;
-          gap: 2px;
-        }
-
-        .stars .filled {
-          color: #d9d9d9;
-          fill: #d9d9d9;
-        }
-
-        .stars .empty {
-          color: #ddd;
-        }
-
-        .rating-text {
-          color: #666;
-          font-size: 14px;
-        }
-
-        .short-description {
-          color: #707070;
-          line-height: 1.6;
-          margin-bottom: 25px;
-          font-size: 14px;
-        }
-
-        .quantity-section {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          margin-bottom: 25px;
-        }
-
-        .quantity-control {
-          display: flex;
-          align-items: center;
-        }
-
-        .quantity-control button {
-          background: #efefef;
-          border: none;
-          border-radius: 10px;
-          width: 40px;
-          height: 40px;
-          cursor: pointer;
-          font-size: 18px;
-          color: #666;
-        }
-
-        .quantity-control span {
-          padding: 0 15px;
-          font-weight: 500;
-        }
-
-        .add-to-cart {
-          background: #79a637;
-          color: white;
-          border: none;
-          width: 300px;
-          padding: 12px 24px;
-          text-align: center;
-          border-radius: 6px;
-          display: flex;
-          align-items: center;
-          justify-content: center; /* Add this to center horizontally */
-          gap: 8px;
-          cursor: pointer;
-          font-weight: 500;
-          transition: background 0.3s;
-        }
-
-        .add-to-cart:hover {
-          background: #45a049;
-        }
-
-        .wishlist {
-          background: #efefef;
-          border: none;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          color: #666;
-        }
-
-        .share-section {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          font-size: 14px;
-          color: #666;
-        }
-
-        .social-icons {
-          display: flex;
-          gap: 8px;
-        }
-
-        .social-btn {
-          background: #555555;
-          color: white;
-          width: 28px;
-          height: 28px;
-          border: none;
-          border-radius: 20px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: opacity 0.3s ease;
-        }
-
-        /* Tabs */
-        .tabs-container {
-          margin-bottom: 40px;
-          text-align: left;
-        }
-
-        .tab-headers {
-          display: flex;
-          border-bottom: 1px solid #ddd;
-          margin-bottom: 20px;
-        }
-
-        .tab-header {
-          background: none;
-          border: none;
-          padding: 15px 0;
-          margin: 0px auto;
-          cursor: pointer;
-          font-size: 16px;
-          color: #a2a2a2;
-          border-bottom: 2px solid transparent;
-          transition: all 0.3s;
-        }
-
-        .tab-header.active {
-          color: #4b4b4b;
-          border-bottom-color: #4caf50;
-          font-weight: 600;
-        }
-
-        .tab-content {
-          min-height: 200px;
-        }
-
-        .description-content {
-          display: grid;
-          grid-template-columns: 2fr 1fr;
-          gap: 40px;
-        }
-
-        .description-text p {
-          line-height: 1.6;
-          color: #333;
-          margin-bottom: 20px;
-        }
-
-        .great-for h3 {
-          color: #313131;
-          margin-bottom: 15px;
-        }
-
-        .great-for span {
-          color: #79a637;
-        }
-
-        .great-for ul {
-          padding-left: 20px;
-        }
-
-        .great-for li {
-          margin-bottom: 10px;
-          line-height: 1.5;
-          color: #707070;
-        }
-
-        .video-section {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .video-placeholder {
-          width: 300px;
-          height: 200px;
-          background: #f0f0f0;
-          border-radius: 12px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: background 0.3s;
-        }
-
-        .video-placeholder:hover {
-          background: #e8e8e8;
-        }
-
-        .play-icon {
-          color: #4caf50;
-        }
-
-        /* Specifications */
-        .specifications h3 {
-          margin-bottom: 20px;
-          color: #333;
-          text-align: left;
-        }
-
-        .specs-table {
-          width: 40%;
-          border-collapse: collapse;
-          background: white;
-          overflow: hidden;
-        }
-
-        .specs-table th {
-          background: #f8f9fa;
-          padding: 15px;
-          text-align: left;
-          font-weight: 600;
-          color: #333;
-          border-bottom: 1px solid #e9ecef;
-        }
-
-        .specs-table td {
-          padding: 15px;
-          border-bottom: 1px solid #e9ecef;
-          color: #787878;
-          text-align: left;
-        }
-
-        .specs-table tr.even {
-          background: #f8f9fa;
-        }
-
-        .specs-table tr.odd {
-          background: white;
-        }
-
-        @media (max-width: 768px) {
-          .product-container {
-            grid-template-columns: 1fr;
-            gap: 20px;
-          }
-
-          .product-images {
-            flex-direction: column-reverse;
-          }
-
-          .thumbnail-list {
-            flex-direction: row;
-            justify-content: center;
-          }
-
-          .description-content {
-            grid-template-columns: 1fr;
-          }
-
-          .quantity-section {
-            flex-wrap: wrap;
-          }
-        }
-
-        .reviews-container {
-          max-width: 1024px;
-          margin: 0 auto;
-          padding: 24px;
-          background-color: white;
-        }
-
-        .reviews-layout {
-          display: flex;
-          gap: 32px;
-        }
-
-        .reviews-list {
-          flex: 1;
-        }
-
-        .review-item {
-          border-bottom: 1px solid #e5e7eb;
-          padding-bottom: 24px;
-          margin-bottom: 24px;
-        }
-
-        .review-header {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-          margin-bottom: 8px;
-        }
-          .star-division{
-          display: flex;
-          margin-left: -5px;
-          gap: 8px;
-          }
-
-        .star-rating {
-          display: flex;
-        }
-
-        .filled {
-          color: #22c55e;
-          fill: #22c55e;
-        }
-
-        .empty {
-          color: #e5e7eb;
-          fill: #e5e7eb;
-        }
-
-        .reviewer-name {
-          color: #6b7280;
-          font-size: 14px;
-          margin-left: 8px;
-        }
-
-        .review-date {
-          color: #9ca3af;
-          font-size: 14px;
-        }
-
-        .review-text {
-          color: #374151;
-          margin-bottom: 16px;
-          line-height: 1.5;
-        }
-
-        .review-actions {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-        }
-
-        .helpful-text {
-          font-size: 14px;
-          color: #6b7280;
-        }
-
-        .vote-button {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-          font-size: 14px;
-          color: #6b7280;
-          border: none;
-          background: none;
-          cursor: pointer;
-          padding: 4px;
-          transition: color 0.2s;
-        }
-
-        .vote-button.helpful:hover {
-          color: #22c55e;
-        }
-
-        .vote-button.not-helpful:hover {
-          color: #ef4444;
-        }
-
-        .view-more-btn {
-          color: #22c55e;
-          font-weight: 500;
-          border: none;
-          background: none;
-          cursor: pointer;
-          font-size: 16px;
-          transition: color 0.2s;
-        }
-
-        .view-more-btn:hover {
-          color: #16a34a;
-        }
-
-        .rating-summary {
-          width: 320px;
-          padding-left: 32px;
-        }
-
-        .rating-display {
-          text-align: center;
-          margin-bottom: 24px;
-        }
-
-        .rating-number {
-          font-size: 48px;
-          font-weight: bold;
-          color: #1f2937;
-          margin-bottom: 8px;
-        }
-
-        .rating-subtitle {
-          color: #6b7280;
-          margin-top: 8px;
-        }
-
-        .rating-bars {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .rating-bar {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 14px;
-          margin-bottom: 8px;
-        }
-
-        .rating-label {
-          color: #6b7280;
-          width: 40px;
-        }
-
-        .rating-bar-container {
-          flex: 1;
-          background-color: #e5e7eb;
-          border-radius: 9999px;
-          height: 8px;
-          position: relative;
-        }
-
-        .rating-bar-fill {
-          background-color: #22c55e;
-          height: 8px;
-          border-radius: 9999px;
-          transition: width 0.3s ease;
-        }
-
-        .rating-percentage {
-          color: #6b7280;
-          width: 32px;
-        }
-
-        @media (max-width: 768px) {
-          .reviews-layout {
-            flex-direction: column;
-          }
-
-          .rating-summary {
-            width: 100%;
-            padding-left: 0;
-            margin-top: 32px;
-          }
-        }
-      `}</style>
     </div>
   );
 };
