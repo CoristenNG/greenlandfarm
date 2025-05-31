@@ -390,8 +390,9 @@ const BellPepperProduct = () => {
                   {/* Right side - Rating Summary */}
                   <div className="rating-summary">
                     <div className="rating-display">
-                      <div className="rating-number">4.5</div>
-                      <div className="star-rating">
+                      <div className="rating-number">4.5<span> /5 Stars</span></div>
+                     <div className="absolute-rating">
+                       <div className="star-rating">
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
@@ -401,6 +402,7 @@ const BellPepperProduct = () => {
                         ))}
                       </div>
                       <div className="rating-subtitle">Based on 56 reviews</div>
+                     </div>
                     </div>
 
                     <div className="rating-bars">
