@@ -29,7 +29,7 @@ const BellPepperProduct = () => {
 
   const product = {
     name: "Organic Red Tomatoes (Premium)",
-    price: "₦ 4500.00",
+    price: "₦ 7000.00",
     rating: 4.8,
     reviews: 156,
     description:
@@ -145,12 +145,10 @@ const BellPepperProduct = () => {
               ))}
             </div>
           </div>
-          <div className="product-price">{product.price}</div>
+          <div className="product-price">{product.price} <span className="product-price-span">/kg</span></div>
 
           <p className="short-description">
-            Grade A+ | Fresh, organic tomatoes perfect for cooking, salads,
-            sauces, and soups. Sustainably grown by certified organic farmers in
-            Nigeria with guaranteed freshness and quality delivery.
+            Our Bell Peppers are handpicked fresh from our pesticide-free fields. They’re sweet, crunchy, and perfect for stews, salads, and jollof rice.
           </p>
 
           {/* Quantity and Actions */}
@@ -237,7 +235,6 @@ const BellPepperProduct = () => {
                   </ul>
                 </div>
               </div>
-
               <div className="video-section">
                 <div className="video-placeholder">
                   <Play size={48} className="play-icon" />
@@ -288,7 +285,7 @@ const BellPepperProduct = () => {
                         <div className="star-division">
                           <span className="reviewer-name">Fatima K.</span>
                           <span className="review-date">
-                            06 - 05 - 2025 | 06:37 AM
+                            (06 - 05 - 2025) | 06:37 AM
                           </span>
                         </div>
                       </div>
@@ -325,7 +322,7 @@ const BellPepperProduct = () => {
                         <div className="star-division">
                           <span className="reviewer-name">Chinedu O.</span>
                           <span className="review-date">
-                            05 - 05 - 2025 | 7:02 PM
+                            (05 - 05 - 2025) | 7:02 PM
                           </span>
                         </div>
                       </div>
@@ -362,7 +359,7 @@ const BellPepperProduct = () => {
                         <div className="star-division">
                           <span className="reviewer-name">Aisha M.</span>
                           <span className="review-date">
-                            04 - 05 - 2025 | 8:02 PM
+                            (04 - 05 - 2025) | 8:02 PM
                           </span>
                         </div>
                       </div>
@@ -411,20 +408,20 @@ const BellPepperProduct = () => {
                         <div className="rating-bar-container">
                           <div
                             className="rating-bar-fill"
-                            style={{ width: "36%" }}
+                            style={{ width: "74%" }}
                           />
                         </div>
-                        <span className="rating-percentage">36%</span>
+                        <span className="rating-percentage">74%</span>
                       </div>
                       <div className="rating-bar">
                         <span className="rating-label">4 Star</span>
                         <div className="rating-bar-container">
                           <div
                             className="rating-bar-fill"
-                            style={{ width: "18%" }}
+                            style={{ width: "11%" }}
                           />
                         </div>
-                        <span className="rating-percentage">18%</span>
+                        <span className="rating-percentage">11%</span>
                       </div>
                       <div className="rating-bar">
                         <span className="rating-label">3 Star</span>
@@ -441,10 +438,10 @@ const BellPepperProduct = () => {
                         <div className="rating-bar-container">
                           <div
                             className="rating-bar-fill"
-                            style={{ width: "4%" }}
+                            style={{ width: "1%" }}
                           />
                         </div>
-                        <span className="rating-percentage">4%</span>
+                        <span className="rating-percentage">1%</span>
                       </div>
                       <div className="rating-bar">
                         <span className="rating-label">1 Star</span>
