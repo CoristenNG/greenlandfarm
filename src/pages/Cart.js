@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Cart.css";
 import { MapPinned, Plus, Minus, X, Trash2, Box } from "lucide-react";
+import { useCart } from "../context/CartContext";
 
 const Cart = () => {
+  const { setCartItemCount, updateQuantity: updateCartQuantity } = useCart();
+
   const [savedAddresses, setSavedAddresses] = useState([
     {
       id: 1,
@@ -27,7 +30,7 @@ const Cart = () => {
 
   // Load cart items on component mount
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem('cart') || '[]');
+    const items = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartItems(items);
     calculateTotal(items);
   }, []);
@@ -35,8 +38,10 @@ const Cart = () => {
   // Calculate totals whenever cart items change
   const calculateTotal = (items) => {
     const total = items.reduce((sum, item) => {
-      const price = parseFloat(item.price.toString().replace('₦', '').replace(',', ''));
-      return sum + (price * item.quantity);
+      const price = parseFloat(
+        item.price.toString().replace("₦", "").replace(",", "")
+      );
+      return sum + price * item.quantity;
     }, 0);
     setItemsTotal(total);
   };
@@ -48,7 +53,7 @@ const Cart = () => {
         return {
           ...item,
           quantity: newQuantity,
-          totalPrice: item.price * newQuantity
+          totalPrice: parseFloat(item.price) * newQuantity
         };
       }
       return item;
@@ -57,12 +62,14 @@ const Cart = () => {
     setCartItems(updatedItems);
     localStorage.setItem('cart', JSON.stringify(updatedItems));
     calculateTotal(updatedItems);
+    updateCartQuantity(id, change); // Now this will be defined
   };
 
   const removeAllItems = () => {
     setCartItems([]);
-    localStorage.removeItem('cart');
+    localStorage.removeItem("cart");
     setItemsTotal(0);
+    setCartItemCount(0); // Update the global cart count
   };
 
   const selectAddress = (id) => {
@@ -94,7 +101,7 @@ const Cart = () => {
   };
 
   const discount = 0;
-  const shippingFee = shippingMode === 'delivery' ? 1000 : 0;
+  const shippingFee = shippingMode === "delivery" ? 1000 : 0;
   const total = itemsTotal - discount + shippingFee;
 
   return (
@@ -244,19 +251,21 @@ const Cart = () => {
                 <div key={item.id} className="cart-item">
                   <div className="cart-box">
                     <div className="item-image">
-                      <img 
-                        src={item.image} 
+                      <img
+                        src={item.image}
                         alt={item.name}
-                        className="product-image" 
+                        className="product-image"
                       />
                     </div>
 
                     <div className="item-info">
                       <h3>{item.name}</h3>
                       <p>
-                        ₦ {parseFloat(item.price).toLocaleString("en-NG", {
+                        ₦{" "}
+                        {parseFloat(item.price).toLocaleString("en-NG", {
                           minimumFractionDigits: 2,
-                        })} /kg
+                        })}{" "}
+                        /kg
                       </p>
                     </div>
                   </div>
@@ -297,9 +306,11 @@ const Cart = () => {
             <div className="shipping-mode-section">
               <p className="section-subtitle">Select the shipping mode</p>
 
-              <div 
-                className={`shipping-option ${shippingMode === 'pickup' ? 'selected' : ''}`}
-                onClick={() => setShippingMode('pickup')}
+              <div
+                className={`shipping-option ${
+                  shippingMode === "pickup" ? "selected" : ""
+                }`}
+                onClick={() => setShippingMode("pickup")}
               >
                 <div className="selection-indicator" />
                 <div className="option-details">
@@ -310,9 +321,11 @@ const Cart = () => {
                 </div>
               </div>
 
-              <div 
-                className={`shipping-option ${shippingMode === 'delivery' ? 'selected' : ''}`}
-                onClick={() => setShippingMode('delivery')}
+              <div
+                className={`shipping-option ${
+                  shippingMode === "delivery" ? "selected" : ""
+                }`}
+                onClick={() => setShippingMode("delivery")}
               >
                 <div className="selection-indicator" />
                 <div className="option-details">

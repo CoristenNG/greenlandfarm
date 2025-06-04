@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "../styles/Navbar.css";
 import { Search, User, ShoppingCart, Menu, X } from "lucide-react";
 import Logo from "../assets/urbanLogo.png";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext"; // Import Link from react-router-dom
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -10,6 +11,8 @@ const Navbar = () => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  const { cartItemCount } = useCart();
 
   return (
     <div className="navbar-container">
@@ -63,9 +66,11 @@ const Navbar = () => {
                 <User size={18} />
                 <span className="action-text">Account</span>
               </button>
-              <Link to="/cart" className="action-btn">
-                <ShoppingCart size={18} />
-                <span className="action-text">Cart</span>
+              <Link to="/cart" className="nav-link">
+                <ShoppingCart size={20} />
+                {cartItemCount > 0 && (
+                  <span className="cart-indicator">{cartItemCount}</span>
+                )}
               </Link>
             </div>
 

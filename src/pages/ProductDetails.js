@@ -158,19 +158,32 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = () => {
+    // Parse the price string to get numeric value
+    const priceValue = parseFloat(product.price.replace('₦', '').replace(',', ''));
+
     const cartItem = {
-      id: id,
+      id: parseInt(id),
       name: product.name,
-      price: product.price,
+      price: priceValue, // Store as number
       quantity: quantity,
       image: product.images[0],
+      totalPrice: priceValue * quantity // Add total price calculation
     };
 
     // Get existing cart items from localStorage
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-    // Add new item
-    existingCart.push(cartItem);
+    // Check if item already exists in cart
+    const existingItemIndex = existingCart.findIndex(item => item.id === cartItem.id);
+
+    if (existingItemIndex >= 0) {
+      // Update quantity and total price if item exists
+      existingCart[existingItemIndex].quantity += quantity;
+      existingCart[existingItemIndex].totalPrice += cartItem.totalPrice;
+    } else {
+      // Add new item if it doesn't exist
+      existingCart.push(cartItem);
+    }
 
     // Save back to localStorage
     localStorage.setItem("cart", JSON.stringify(existingCart));
@@ -183,15 +196,6 @@ const ProductDetails = () => {
     { id: "description", label: "Detailed Description / Benefits" },
     { id: "reviews", label: "Reviews and Testimonials" },
   ];
-
-
-const cartItem = {
-  id: parseInt(id),
-  name: product.name,
-  price: parseFloat(product.price.replace('₦', '').replace(',', '')),
-  quantity: quantity,
-  image: product.images[0],
-};
 
   return (
     <div className="product-container-det">

@@ -5,10 +5,12 @@ import ShopPage from './pages/Shop';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
 
 function App() {
   return (
-    <div className="App">
+   <CartProvider>
+     <div className="App">
      <Router>
        <Navbar />
        <Routes>
@@ -20,6 +22,7 @@ function App() {
        <Footer />
      </Router>
     </div>
+   </CartProvider>
   );
 }
 

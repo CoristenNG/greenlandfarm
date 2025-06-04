@@ -307,3 +307,42 @@
             border-radius: 18px;
           }
         }
+
+
+        /* Update these styles */
+.nav-cart {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+}
+
+.cart-indicator {
+  position: absolute;
+  top: 55px; 
+  right: 60px;
+  background: #ff4444;
+  color: white;
+  border-radius: 50%;
+  padding: 2px;
+  font-size: 11px;
+  min-width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  border: 2px solid white;
+  z-index: 1;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.cart-indicator.animate {
+  animation: pulse 0.3s ease-in-out;
+}

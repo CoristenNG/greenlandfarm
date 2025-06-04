@@ -1,6 +1,7 @@
 .cart-container {
   background-color: white;
   min-height: 100vh;
+  
 }
 
 .cart-header {
@@ -514,4 +515,162 @@
 .highlight-text {
   color: #79A637;
   font-weight: bold;
+}
+
+
+
+
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+ .cart-content {
+    grid-template-columns: 1fr;
+    padding: 0 15px;
+  }
+
+  .cart-item {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .cart-box {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 15px;
+  }
+
+  .quantity-controls {
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+  }
+
+   .order-summary {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 12px 12px 0 0;
+    margin: 0 -15px;
+  }
+
+  .summary-card {
+    padding: 0;
+    box-shadow: none;
+  }
+
+  /* Collapsible sections on mobile */
+  .shipping-mode-section,
+  .coupon-section {
+    display: none;
+  }
+
+  .order-totals {
+    margin-top: 0;
+  }
+
+  /* Simplify total rows on mobile */
+  .total-row {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+
+  .grand-total-row {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+
+  /* Mobile-friendly address cards */
+  .address-card {
+    padding: 12px;
+    margin: 10px 0;
+  }
+
+  .address-details {
+    font-size: 14px;
+  }
+
+  /* Mobile-friendly form modal */
+  .address-modal {
+    width: 90%;
+    max-height: 90vh;
+    margin: 20px;
+  }
+
+  /* Adjust cart item image size */
+  .item-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  /* Make buttons more touchable */
+  .quantity-button,
+  .remove-all-button,
+  .add-location-button,
+  .checkout-button {
+    min-height: 44px;
+    padding: 10px 15px;
+  }
+
+  /* Adjust spacing for warning message */
+  .warning-message {
+    margin: 15px 0;
+    font-size: 13px;
+  }
+
+  /* Hide bulk order info on mobile */
+  .bulk-order-info {
+    display: none;
+  }
+
+  /* Make checkout button sticky */
+  .checkout-button {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+}
+
+/* Small mobile devices */
+@media screen and (max-width: 480px) {
+   .cart-content {
+    padding: 0 10px;
+    gap: 20px;
+  }
+
+  .cart-container {
+    padding: 10px;
+  }
+
+  .cart-header h1 {
+    font-size: 20px;
+  }
+
+  .item-info h3 {
+    font-size: 14px;
+  }
+
+  .item-info p {
+    font-size: 13px;
+  }
+
+  .quantity-value {
+    font-size: 14px;
+    min-width: 30px;
+  }
+
+  .cart-items-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .cart-items-header h2 {
+    font-size: 16px;
+  }
 }
