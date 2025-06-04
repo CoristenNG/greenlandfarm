@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Cart.css";
 import { MapPinned, Plus, Minus, X, Trash2, Box } from "lucide-react";
 
@@ -22,37 +22,47 @@ const Cart = () => {
     code: "",
   });
 
-  const [cartItems] = useState([
-    {
-      id: 1,
-      name: "Fresh Bell Pepper (Green)",
-      price: 7000.0,
-      quantity: 2,
-      image: "/api/placeholder/80/80",
-    },
-    {
-      id: 2,
-      name: "Fresh Bell Pepper (Green)",
-      price: 7000.0,
-      quantity: 2,
-      image: "/api/placeholder/80/80",
-    },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
+  const [itemsTotal, setItemsTotal] = useState(0);
 
-  const itemsTotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-  const discount = 0;
-  const shippingFee = 0;
-  const total = itemsTotal - discount + shippingFee;
+  // Load cart items on component mount
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem('cart') || '[]');
+    setCartItems(items);
+    calculateTotal(items);
+  }, []);
+
+  // Calculate totals whenever cart items change
+  const calculateTotal = (items) => {
+    const total = items.reduce((sum, item) => {
+      const price = parseFloat(item.price.toString().replace('₦', '').replace(',', ''));
+      return sum + (price * item.quantity);
+    }, 0);
+    setItemsTotal(total);
+  };
 
   const updateQuantity = (id, change) => {
-    console.log(`Update quantity for item ${id} by ${change}`);
+    const updatedItems = cartItems.map(item => {
+      if (item.id === id) {
+        const newQuantity = Math.max(1, item.quantity + change);
+        return {
+          ...item,
+          quantity: newQuantity,
+          totalPrice: item.price * newQuantity
+        };
+      }
+      return item;
+    });
+
+    setCartItems(updatedItems);
+    localStorage.setItem('cart', JSON.stringify(updatedItems));
+    calculateTotal(updatedItems);
   };
 
   const removeAllItems = () => {
-    console.log("Remove all items");
+    setCartItems([]);
+    localStorage.removeItem('cart');
+    setItemsTotal(0);
   };
 
   const selectAddress = (id) => {
@@ -83,6 +93,10 @@ const Cart = () => {
     console.log("Apply coupon:", couponCode);
   };
 
+  const discount = 0;
+  const shippingFee = shippingMode === 'delivery' ? 1000 : 0;
+  const total = itemsTotal - discount + shippingFee;
+
   return (
     <div className="cart-container">
       {/* Header */}
@@ -97,19 +111,49 @@ const Cart = () => {
           <div className="shipping-section">
             <h2>Shipping Address</h2>
 
-            <div className="no-address-message">
-              <MapPinned size={40} color="#ccc" className="map-icon" />
-              <p>No address saved</p>
-              <p className="address-subtext">
-                Add an address so we can show you exact costs and delivery
-              </p>
-              <button
-                onClick={() => setShowAddressForm(true)}
-                className="add-location-button"
-              >
-                Add new locations
-              </button>
-            </div>
+            {savedAddresses.length === 0 ? (
+              <div className="no-address-message">
+                <MapPinned size={40} color="#ccc" className="map-icon" />
+                <p>No address saved</p>
+                <p className="address-subtext">
+                  Add an address so we can show you exact costs and delivery
+                </p>
+                <button
+                  onClick={() => setShowAddressForm(true)}
+                  className="add-location-button"
+                >
+                  Add new locations
+                </button>
+              </div>
+            ) : (
+              <div className="saved-addresses">
+                <h3>Saved Address</h3>
+                {savedAddresses.map((address) => (
+                  <div
+                    key={address.id}
+                    onClick={() => selectAddress(address.id)}
+                    className={`address-card ${
+                      address.isSelected ? "selected" : ""
+                    }`}
+                  >
+                    {address.isSelected && (
+                      <div className="address-selected-indicator" />
+                    )}
+                    <div className="address-details">
+                      <div className="address-name">{address.name}</div>
+                      <div className="address-text">{address.address}</div>
+                      <div className="address-text">{address.code}</div>
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={() => setShowAddressForm(true)}
+                  className="add-location-button"
+                >
+                  Add new address
+                </button>
+              </div>
+            )}
 
             {/* Warning Message */}
             <div className="warning-message">
@@ -182,86 +226,65 @@ const Cart = () => {
                 </div>
               </div>
             )}
-
-            {/* Saved Addresses */}
-            {savedAddresses.length > 0 && (
-              <div className="saved-addresses">
-                <h3>Saved Address</h3>
-                {savedAddresses.map((address) => (
-                  <div
-                    key={address.id}
-                    onClick={() => selectAddress(address.id)}
-                    className={`address-card ${
-                      address.isSelected ? "selected" : ""
-                    }`}
-                  >
-                    {address.isSelected && (
-                      <div className="address-selected-indicator" />
-                    )}
-                    <div className="address-details">
-                      <div className="address-name">{address.name}</div>
-                      <div className="address-text">{address.address}</div>
-                      <div className="address-text">{address.code}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Cart Items */}
           <div className="cart-items-section">
             <div className="cart-items-header">
-              <h2>Cart (3 Items)</h2>
-              <button onClick={removeAllItems} className="remove-all-button">
-                <Trash2 size={16} className="remove-icon" /> Remove all
-              </button>
+              <h2>Cart ({cartItems.length} Items)</h2>
+              {cartItems.length > 0 && (
+                <button onClick={removeAllItems} className="remove-all-button">
+                  <Trash2 size={16} className="remove-icon" /> Remove all
+                </button>
+              )}
             </div>
 
-            {cartItems.map((item, index) => (
-              <div key={item.id} className="cart-item">
-                <div className="cart-box">
-                  <div
-                    className={`item-image ${index === 0 ? "first-item" : ""}`}
-                  >
-                    {index === 0 ? (
-                      <div className="item-emoji">Img</div>
-                    ) : (
-                      <div className="item-placeholder"></div>
-                    )}
+            {cartItems.length > 0 ? (
+              cartItems.map((item) => (
+                <div key={item.id} className="cart-item">
+                  <div className="cart-box">
+                    <div className="item-image">
+                      <img 
+                        src={item.image} 
+                        alt={item.name}
+                        className="product-image" 
+                      />
+                    </div>
+
+                    <div className="item-info">
+                      <h3>{item.name}</h3>
+                      <p>
+                        ₦ {parseFloat(item.price).toLocaleString("en-NG", {
+                          minimumFractionDigits: 2,
+                        })} /kg
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="item-info">
-                    <h3>{item.name}</h3>
-                    <p>
-                      ₦{" "}
-                      {item.price.toLocaleString("en-NG", {
-                        minimumFractionDigits: 2,
-                      })}{" "}
-                      /kg
-                    </p>
+                  <div className="quantity-controls">
+                    <button
+                      onClick={() => updateQuantity(item.id, -1)}
+                      className="quantity-button"
+                    >
+                      <Minus size={16} />
+                    </button>
+
+                    <span className="quantity-value">{item.quantity}</span>
+
+                    <button
+                      onClick={() => updateQuantity(item.id, 1)}
+                      className="quantity-button"
+                    >
+                      <Plus size={16} />
+                    </button>
                   </div>
                 </div>
-
-                <div className="quantity-controls">
-                  <button
-                    onClick={() => updateQuantity(item.id, -1)}
-                    className="quantity-button"
-                  >
-                    <Minus size={16} />
-                  </button>
-
-                  <span className="quantity-value">{item.quantity}</span>
-
-                  <button
-                    onClick={() => updateQuantity(item.id, 1)}
-                    className="quantity-button"
-                  >
-                    <Plus size={16} />
-                  </button>
-                </div>
+              ))
+            ) : (
+              <div className="empty-cart-message">
+                <p>Your cart is empty</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
 
@@ -274,7 +297,10 @@ const Cart = () => {
             <div className="shipping-mode-section">
               <p className="section-subtitle">Select the shipping mode</p>
 
-              <div className="shipping-option selected">
+              <div 
+                className={`shipping-option ${shippingMode === 'pickup' ? 'selected' : ''}`}
+                onClick={() => setShippingMode('pickup')}
+              >
                 <div className="selection-indicator" />
                 <div className="option-details">
                   <div className="option-title">Store Pickup</div>
@@ -284,10 +310,14 @@ const Cart = () => {
                 </div>
               </div>
 
-              <div className="shipping-option">
+              <div 
+                className={`shipping-option ${shippingMode === 'delivery' ? 'selected' : ''}`}
+                onClick={() => setShippingMode('delivery')}
+              >
+                <div className="selection-indicator" />
                 <div className="option-details">
-                  <div className="option-title inactive">Delivery</div>
-                  <div className="option-description inactive">
+                  <div className="option-title">Delivery</div>
+                  <div className="option-description">
                     The order is shipped to your doorstep depends on your pickup
                     range/delivery options.
                   </div>

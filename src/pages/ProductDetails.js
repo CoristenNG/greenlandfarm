@@ -184,6 +184,15 @@ const ProductDetails = () => {
     { id: "reviews", label: "Reviews and Testimonials" },
   ];
 
+
+const cartItem = {
+  id: parseInt(id),
+  name: product.name,
+  price: parseFloat(product.price.replace('₦', '').replace(',', '')),
+  quantity: quantity,
+  image: product.images[0],
+};
+
   return (
     <div className="product-container-det">
       <div className="product-header">
