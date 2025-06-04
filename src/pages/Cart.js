@@ -414,10 +414,9 @@ const Cart = () => {
                   <span>Need Large Quantities?</span>
                 </div>
                 <p className="info-text">
-                  Call us directly at bulk orders, bundles and special requests
-                  via call
-                  <span className="highlight-text">+234 1234 567 890</span> for
-                  customized pricing and delivery options.
+                  For wholesale or bulk orders, kindly
+                  <span className="highlight-text"> contact us</span> directly or call 
+                  <span className="highlight-text"> +234 (913) 443 4790</span> for customized pricing and delivery arrangements.
                 </p>
               </div>
             </div>
