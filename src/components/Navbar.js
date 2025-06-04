@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/Navbar.css"; 
+import "../styles/Navbar.css";
 import { Search, User, ShoppingCart, Menu, X } from "lucide-react";
 import Logo from "../assets/urbanLogo.png";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
@@ -63,10 +63,10 @@ const Navbar = () => {
                 <User size={18} />
                 <span className="action-text">Account</span>
               </button>
-              <button className="action-btn">
+              <Link to="/cart" className="action-btn">
                 <ShoppingCart size={18} />
                 <span className="action-text">Cart</span>
-              </button>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -123,8 +123,6 @@ const Navbar = () => {
           </div>
         </div>
       )}
-
-    
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import {
   ShoppingCart,
@@ -19,21 +20,116 @@ import Egg from "../assets/allEgg.png";
 import Pepper from "../assets/allPepper.png";
 import Round from "../assets/allRoundPepper.png";
 import Tomato from "../assets/allTomato.png";
-import Rec from "../assets/shopRec.png"; // Assuming you have an image for the pepper
+import Rec from "../assets/shopRec.png";
 
-const BellPepperProduct = () => {
+const ProductDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
   const [selectedImage, setSelectedImage] = useState(0);
 
-  const product = {
+  const products = [
+    {
+      id: 1,
+      name: "Fresh bell pepper",
+      package: "vegetables",
+      price: "₦ 3,000.00",
+      quantity: "1 kg",
+      image: Pepper,
+      category: "vegetables",
+      images: [Pepper, Rec, Rec, Rec],
+      rating: 4.8,
+      reviews: 156,
+      description: "Our vibrant Green Bell Peppers, also known simply as Bell Peppers, are a testament to fresh, wholesome produce. Cultivated with care in our Epe greenhouse, each pepper is a rich source of Vitamin C, powerful antioxidants, and dietary fiber, making them a delicious and healthy addition to any meal. We pride ourselves on growing them without synthetic pesticides or harmful chemicals, ensuring you receive only the purest, most natural goodness.",
+      specifications: [
+        { attribute: "Category", value: "Fresh Vegetables" },
+        { attribute: "Weight/Unit", value: "Sold per kg" },
+        { attribute: "Cultivation", value: "Greenhouse" },
+        {
+          attribute: "Delivery Area",
+          value: "Lagos & Ogun (currently) Except for big bulk purchase",
+        },
+        { attribute: "Availability", value: "Year-round" },
+      ],
+    },
+    {
+      id: 2,
+      name: "Fresh red pepper",
+      package: "vegetables",
+      price: "₦ 3,000.00",
+      quantity: "1 kg",
+      image: Round,
+      category: "vegetables",
+      images: [Round, Rec, Rec, Rec],
+      rating: 4.5,
+      reviews: 120,
+      description: "Our red peppers are carefully cultivated for maximum flavor and nutrition.",
+      specifications: [
+        { attribute: "Category", value: "Fresh Vegetables" },
+        { attribute: "Weight/Unit", value: "Sold per kg" },
+      ],
+    },
+    {
+      id: 3,
+      name: "Fresh red beans",
+      price: "₦ 2,000.00",
+      package: "Egg",
+      quantity: "1 kg",
+      image: Egg,
+      category: "vegetables",
+      images: [Egg, Rec, Rec, Rec],
+      rating: 4.2,
+      reviews: 90,
+      description: "Premium quality red beans, rich in protein and fiber.",
+      specifications: [
+        { attribute: "Category", value: "Legumes" },
+        { attribute: "Weight/Unit", value: "Sold per kg" },
+      ],
+    },
+    {
+      id: 4,
+      name: "Fresh tomato",
+      price: "₦ 3,000.00",
+      package: "vegetables",
+      quantity: "1 kg",
+      image: Tomato,
+      category: "vegetables",
+      images: [Tomato, Rec, Rec, Rec],
+      rating: 4.7,
+      reviews: 140,
+      description: "Juicy, ripe tomatoes perfect for sauces, salads and cooking.",
+      specifications: [
+        { attribute: "Category", value: "Fresh Vegetables" },
+        { attribute: "Weight/Unit", value: "Sold per kg" },
+      ],
+    },
+    {
+      id: 5,
+      name: "Fresh live chicken",
+      price: "₦ 5,000.00",
+      package: "Egg",
+      quantity: "1 kg",
+      image: Egg,
+      category: "others",
+      images: [Egg, Rec, Rec, Rec],
+      rating: 4.3,
+      reviews: 75,
+      description: "Farm-fresh live chicken, raised without antibiotics.",
+      specifications: [
+        { attribute: "Category", value: "Poultry" },
+        { attribute: "Weight/Unit", value: "Sold per kg" },
+      ],
+    },
+  ];
+
+  // Find the current product or use default if not found
+  const product = products.find(p => p.id === parseInt(id)) || {
     name: "Organic Red Tomatoes (Premium)",
     price: "₦ 7000.00",
     rating: 4.8,
     reviews: 156,
-    description:
-      "Our vibrant Green Bell Peppers, also known simply as Bell Peppers, are a testament to fresh, wholesome produce. Cultivated with care in our Epe greenhouse, each pepper is a rich source of Vitamin C, powerful antioxidants, and dietary fiber, making them a delicious and healthy addition to any meal. We pride ourselves on growing them without synthetic pesticides or harmful chemicals, ensuring you receive only the purest, most natural goodness.",
+    description: "Our vibrant Green Bell Peppers, also known simply as Bell Peppers, are a testament to fresh, wholesome produce. Cultivated with care in our Epe greenhouse, each pepper is a rich source of Vitamin C, powerful antioxidants, and dietary fiber, making them a delicious and healthy addition to any meal. We pride ourselves on growing them without synthetic pesticides or harmful chemicals, ensuring you receive only the purest, most natural goodness.",
     images: [Pepper, Rec, Rec, Rec],
     specifications: [
       { attribute: "Category", value: "Fresh Vegetables" },
@@ -45,63 +141,43 @@ const BellPepperProduct = () => {
       },
       { attribute: "Availability", value: "Year-round" },
     ],
+    category: "vegetables"
   };
+
+  // Filter related products
+  const relatedProducts = products.filter(p => 
+    p.id !== parseInt(id) && p.category === product.category
+  ).slice(0, 4);
 
   const handleQuantityChange = (change) => {
     setQuantity(Math.max(1, quantity + change));
   };
 
+  const handleAddToCart = () => {
+    const cartItem = {
+      id: id,
+      name: product.name,
+      price: product.price,
+      quantity: quantity,
+      image: product.images[0]
+    };
+    
+    // Get existing cart items from localStorage
+    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    // Add new item
+    existingCart.push(cartItem);
+    
+    // Save back to localStorage
+    localStorage.setItem('cart', JSON.stringify(existingCart));
+    
+    // Navigate to cart page
+    navigate('/cart');
+  };
+
   const tabs = [
     { id: "description", label: "Detailed Description / Benefits" },
     { id: "reviews", label: "Reviews and Testimonials" },
-  ];
-
-  const products = [
-    {
-      id: 1,
-      name: "Fresh bell pepper",
-      package: "vegetables",
-      price: "₦ 3,000.00",
-      quantity: "1 kg",
-      image: Pepper,
-      category: "vegetables",
-    },
-    {
-      id: 2,
-      name: "Fresh red pepper",
-      package: "vegetables",
-      price: "₦ 3,000.00",
-      quantity: "1 kg",
-      image: Round,
-      category: "vegetables",
-    },
-    {
-      id: 3,
-      name: "Fresh red beans",
-      price: "₦ 2,000.00",
-      package: "Egg",
-      quantity: "1 kg",
-      image: Egg,
-      category: "vegetables",
-    },
-    {
-      id: 4,
-      name: "Fresh tomato",
-      price: "₦ 3,000.00",
-      package: "vegetables",
-      quantity: "1 kg",
-      image: Tomato,
-      category: "vegetables",
-    },
-    {
-      id: 5,
-      name: "Fresh live chicken",
-      price: "₦ 5,000.00",
-      package: "Egg",
-      quantity: "1 kg",
-      image: Egg,
-      category: "others",
-    },
   ];
 
   return (
@@ -119,7 +195,7 @@ const BellPepperProduct = () => {
                 }`}
                 onClick={() => setSelectedImage(index)}
               >
-                <img src={img} alt={`Organic tomato ${index + 1}`} />
+                <img src={img} alt={`${product.name} ${index + 1}`} />
               </div>
             ))}
           </div>
@@ -148,7 +224,7 @@ const BellPepperProduct = () => {
           <div className="product-price">{product.price} <span className="product-price-span">/kg</span></div>
 
           <p className="short-description">
-            Our Bell Peppers are handpicked fresh from our pesticide-free fields. They’re sweet, crunchy, and perfect for stews, salads, and jollof rice.
+            Our Bell Peppers are handpicked fresh from our pesticide-free fields. They're sweet, crunchy, and perfect for stews, salads, and jollof rice.
           </p>
 
           {/* Quantity and Actions */}
@@ -159,7 +235,7 @@ const BellPepperProduct = () => {
               <button onClick={() => handleQuantityChange(1)}>+</button>
             </div>
 
-            <button className="add-to-cart">
+            <button className="add-to-cart" onClick={handleAddToCart}>
               <ShoppingCart size={18} />
               Add to Cart
             </button>
@@ -471,7 +547,7 @@ const BellPepperProduct = () => {
 
       {/* Products Grid */}
       <div className="products-grid">
-        {products.map((product) => (
+        {relatedProducts.map((product) => (
           <Link
             to={`/product/${product.id}`}
             key={product.id}
@@ -500,9 +576,8 @@ const BellPepperProduct = () => {
       </div>
 
       <button className="view-more-btn">View More →</button>
-
     </div>
   );
 };
 
-export default BellPepperProduct;
+export default ProductDetails;
