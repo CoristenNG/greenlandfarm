@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import '../styles/Cart.css';
-import { MapPin, Plus, Minus, X } from 'lucide-react';
+import React, { useState } from "react";
+import "../styles/Cart.css";
+import { MapPinned, Plus, Minus, X, Trash2, Box } from "lucide-react";
 
 const Cart = () => {
   const [savedAddresses, setSavedAddresses] = useState([
@@ -9,37 +9,40 @@ const Cart = () => {
       name: "Ayobami A.",
       address: "34a, Victoria Garden Estate, Lekki Phase 1, Lagos State",
       code: "101233",
-      isSelected: true
-    }
+      isSelected: true,
+    },
   ]);
-  
-  const [shippingMode, setShippingMode] = useState('pickup');
+
+  const [shippingMode, setShippingMode] = useState("pickup");
   const [showAddressForm, setShowAddressForm] = useState(false);
-  const [couponCode, setCouponCode] = useState('');
+  const [couponCode, setCouponCode] = useState("");
   const [newAddress, setNewAddress] = useState({
-    name: '',
-    address: '',
-    code: ''
+    name: "",
+    address: "",
+    code: "",
   });
 
   const [cartItems] = useState([
     {
       id: 1,
       name: "Fresh Bell Pepper (Green)",
-      price: 7000.00,
+      price: 7000.0,
       quantity: 2,
-      image: "/api/placeholder/80/80"
+      image: "/api/placeholder/80/80",
     },
     {
       id: 2,
       name: "Fresh Bell Pepper (Green)",
-      price: 7000.00,
+      price: 7000.0,
       quantity: 2,
-      image: "/api/placeholder/80/80"
-    }
+      image: "/api/placeholder/80/80",
+    },
   ]);
 
-  const itemsTotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const itemsTotal = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
   const discount = 0;
   const shippingFee = 0;
   const total = itemsTotal - discount + shippingFee;
@@ -49,14 +52,14 @@ const Cart = () => {
   };
 
   const removeAllItems = () => {
-    console.log('Remove all items');
+    console.log("Remove all items");
   };
 
   const selectAddress = (id) => {
-    setSavedAddresses(addresses => 
-      addresses.map(addr => ({
+    setSavedAddresses((addresses) =>
+      addresses.map((addr) => ({
         ...addr,
-        isSelected: addr.id === id
+        isSelected: addr.id === id,
       }))
     );
   };
@@ -68,16 +71,16 @@ const Cart = () => {
         name: newAddress.name,
         address: newAddress.address,
         code: newAddress.code,
-        isSelected: false
+        isSelected: false,
       };
       setSavedAddresses([...savedAddresses, newAddr]);
-      setNewAddress({ name: '', address: '', code: '' });
+      setNewAddress({ name: "", address: "", code: "" });
       setShowAddressForm(false);
     }
   };
 
   const applyCoupon = () => {
-    console.log('Apply coupon:', couponCode);
+    console.log("Apply coupon:", couponCode);
   };
 
   return (
@@ -93,19 +96,28 @@ const Cart = () => {
           {/* Shipping Address Section */}
           <div className="shipping-section">
             <h2>Shipping Address</h2>
-            
+
             <div className="no-address-message">
-              <MapPin size={40} color="#ccc" className="map-icon" />
+              <MapPinned size={40} color="#ccc" className="map-icon" />
               <p>No address saved</p>
               <p className="address-subtext">
                 Add an address so we can show you exact costs and delivery
               </p>
-              <button 
+              <button
                 onClick={() => setShowAddressForm(true)}
                 className="add-location-button"
               >
                 Add new locations
               </button>
+            </div>
+
+            {/* Warning Message */}
+            <div className="warning-message">
+              Check your product before checkout.
+              <br />
+              <span className="warning-subtext">
+                Make sure check is perfect before completing the purchase.
+              </span>
             </div>
 
             {/* Address Form Modal */}
@@ -114,44 +126,53 @@ const Cart = () => {
                 <div className="address-modal">
                   <div className="modal-header">
                     <h3>Add New Address</h3>
-                    <button 
+                    <button
                       onClick={() => setShowAddressForm(false)}
                       className="close-modal-button"
                     >
                       <X size={20} />
                     </button>
                   </div>
-                  
+
                   <div className="form-group">
                     <label>Name</label>
                     <input
                       type="text"
                       value={newAddress.name}
-                      onChange={(e) => setNewAddress({...newAddress, name: e.target.value})}
+                      onChange={(e) =>
+                        setNewAddress({ ...newAddress, name: e.target.value })
+                      }
                       placeholder="Enter your name"
                     />
                   </div>
-                  
+
                   <div className="form-group">
                     <label>Address</label>
                     <input
                       type="text"
                       value={newAddress.address}
-                      onChange={(e) => setNewAddress({...newAddress, address: e.target.value})}
+                      onChange={(e) =>
+                        setNewAddress({
+                          ...newAddress,
+                          address: e.target.value,
+                        })
+                      }
                       placeholder="Enter full address"
                     />
                   </div>
-                  
+
                   <div className="form-group">
                     <label>Postal Code</label>
                     <input
                       type="text"
                       value={newAddress.code}
-                      onChange={(e) => setNewAddress({...newAddress, code: e.target.value})}
+                      onChange={(e) =>
+                        setNewAddress({ ...newAddress, code: e.target.value })
+                      }
                       placeholder="Enter postal code"
                     />
                   </div>
-                  
+
                   <button
                     onClick={handleAddNewAddress}
                     className="add-address-button"
@@ -170,7 +191,9 @@ const Cart = () => {
                   <div
                     key={address.id}
                     onClick={() => selectAddress(address.id)}
-                    className={`address-card ${address.isSelected ? 'selected' : ''}`}
+                    className={`address-card ${
+                      address.isSelected ? "selected" : ""
+                    }`}
                   >
                     {address.isSelected && (
                       <div className="address-selected-indicator" />
@@ -182,55 +205,44 @@ const Cart = () => {
                     </div>
                   </div>
                 ))}
-                
-                <button 
-                  onClick={() => setShowAddressForm(true)}
-                  className="add-new-address-button"
-                >
-                  + Add New Address
-                </button>
               </div>
             )}
-
-            {/* Warning Message */}
-            <div className="warning-message">
-              ⚠️ Check your product before checkout.
-              <br />
-              <span className="warning-subtext">
-                Make sure check is perfect before completing the purchase.
-              </span>
-            </div>
           </div>
 
           {/* Cart Items */}
           <div className="cart-items-section">
             <div className="cart-items-header">
               <h2>Cart (3 Items)</h2>
-              <button 
-                onClick={removeAllItems}
-                className="remove-all-button"
-              >
-                🗑️ Remove all
+              <button onClick={removeAllItems} className="remove-all-button">
+                <Trash2 size={16} className="remove-icon" /> Remove all
               </button>
             </div>
 
             {cartItems.map((item, index) => (
               <div key={item.id} className="cart-item">
-                <div className={`item-image ${index === 0 ? 'first-item' : ''}`}>
-                  {index === 0 ? (
-                    <div className="item-emoji">🫑</div>
-                  ) : (
-                    <div className="item-placeholder"></div>
-                  )}
+                <div className="cart-box">
+                  <div
+                    className={`item-image ${index === 0 ? "first-item" : ""}`}
+                  >
+                    {index === 0 ? (
+                      <div className="item-emoji">Img</div>
+                    ) : (
+                      <div className="item-placeholder"></div>
+                    )}
+                  </div>
+
+                  <div className="item-info">
+                    <h3>{item.name}</h3>
+                    <p>
+                      ₦{" "}
+                      {item.price.toLocaleString("en-NG", {
+                        minimumFractionDigits: 2,
+                      })}{" "}
+                      /kg
+                    </p>
+                  </div>
                 </div>
-                
-                <div className="item-info">
-                  <h3>{item.name}</h3>
-                  <p>
-                    ₦ {item.price.toLocaleString('en-NG', { minimumFractionDigits: 2 })} /kg
-                  </p>
-                </div>
-                
+
                 <div className="quantity-controls">
                   <button
                     onClick={() => updateQuantity(item.id, -1)}
@@ -238,11 +250,9 @@ const Cart = () => {
                   >
                     <Minus size={16} />
                   </button>
-                  
-                  <span className="quantity-value">
-                    {item.quantity}
-                  </span>
-                  
+
+                  <span className="quantity-value">{item.quantity}</span>
+
                   <button
                     onClick={() => updateQuantity(item.id, 1)}
                     className="quantity-button"
@@ -259,13 +269,11 @@ const Cart = () => {
         <div className="order-summary">
           <div className="summary-card">
             <h2>Order Summary</h2>
-            
+
             {/* Shipping Mode Selection */}
             <div className="shipping-mode-section">
-              <p className="section-subtitle">
-                Select the shipping mode
-              </p>
-              
+              <p className="section-subtitle">Select the shipping mode</p>
+
               <div className="shipping-option selected">
                 <div className="selection-indicator" />
                 <div className="option-details">
@@ -275,12 +283,13 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="shipping-option">
                 <div className="option-details">
                   <div className="option-title inactive">Delivery</div>
                   <div className="option-description inactive">
-                    The order is shipped to your doorstep depends on your pickup range/delivery options.
+                    The order is shipped to your doorstep depends on your pickup
+                    range/delivery options.
                   </div>
                 </div>
               </div>
@@ -288,9 +297,7 @@ const Cart = () => {
 
             {/* Coupon Code */}
             <div className="coupon-section">
-              <p className="section-subtitle">
-                Got any coupon code?
-              </p>
+              <p className="section-subtitle">Got any coupon code?</p>
               <div className="coupon-input-group">
                 <input
                   type="text"
@@ -299,10 +306,7 @@ const Cart = () => {
                   placeholder="Enter coupon code"
                   className="coupon-input"
                 />
-                <button
-                  onClick={applyCoupon}
-                  className="apply-coupon-button"
-                >
+                <button onClick={applyCoupon} className="apply-coupon-button">
                   APPLY
                 </button>
               </div>
@@ -312,46 +316,65 @@ const Cart = () => {
             <div className="order-totals">
               <div className="total-row">
                 <span>Items Total</span>
-                <span>₦ {itemsTotal.toLocaleString('en-NG', { minimumFractionDigits: 2 })}</span>
+                <span>
+                  ₦{" "}
+                  {itemsTotal.toLocaleString("en-NG", {
+                    minimumFractionDigits: 2,
+                  })}
+                </span>
               </div>
-              
+
               <div className="total-row">
                 <span>Discount</span>
-                <span>₦ {discount.toLocaleString('en-NG', { minimumFractionDigits: 2 })}</span>
+                <span>
+                  ₦{" "}
+                  {discount.toLocaleString("en-NG", {
+                    minimumFractionDigits: 2,
+                  })}
+                </span>
               </div>
-              
+
               <div className="total-row">
                 <span>Shipping Fee</span>
-                <span>₦ {shippingFee.toLocaleString('en-NG', { minimumFractionDigits: 2 })}</span>
+                <span>
+                  ₦{" "}
+                  {shippingFee.toLocaleString("en-NG", {
+                    minimumFractionDigits: 2,
+                  })}
+                </span>
               </div>
-              
+
               <div className="total-row">
                 <span>Sub - Total</span>
-                <span>₦ {total.toLocaleString('en-NG', { minimumFractionDigits: 2 })}</span>
+                <span>
+                  ₦{" "}
+                  {total.toLocaleString("en-NG", { minimumFractionDigits: 2 })}
+                </span>
               </div>
-              
+
               <div className="grand-total-row">
                 <span>Total</span>
-                <span>₦ {total.toLocaleString('en-NG', { minimumFractionDigits: 2 })}</span>
+                <span>
+                  ₦{" "}
+                  {total.toLocaleString("en-NG", { minimumFractionDigits: 2 })}
+                </span>
               </div>
-              
-              <button className="checkout-button">
-                Proceed to Checkout ₦
-              </button>
-              
+
+              <button className="checkout-button">Proceed to Checkout ₦</button>
+
               {/* Large Quantities Info */}
               <div className="bulk-order-info">
                 <div className="info-header">
                   <div className="info-icon">
-                    📦
+                    <Box size={30} />
                   </div>
                   <span>Need Large Quantities?</span>
                 </div>
                 <p className="info-text">
-                  Call us directly at bulk orders, bundles and special requests via call 
-                  <span className="highlight-text">
-                    +234 1234 567 890
-                  </span> for customized pricing and delivery options.
+                  Call us directly at bulk orders, bundles and special requests
+                  via call
+                  <span className="highlight-text">+234 1234 567 890</span> for
+                  customized pricing and delivery options.
                 </p>
               </div>
             </div>
