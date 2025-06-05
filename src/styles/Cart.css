@@ -529,12 +529,6 @@
     gap: 30px; 
   }
 
-  .cart-left-column {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
   .order-summary {
     width: 100%;
     position: static; 
@@ -555,19 +549,7 @@
     align-items: center;
     padding: 15px 0; 
   }
-.cart-items-section {
-    width: 100%;
-    order: 2; /* Places cart items section second */
-  }
 
-  .order-summary {
-    width: 100%;
-    order: 3; /* Places order summary last */
-    position: static; 
-    box-shadow: none;
-    padding: 0; 
-    margin: 20px 0; 
-  }
   .cart-box {
     flex: 1; 
     min-width: 0;
@@ -603,11 +585,6 @@
 
   .address-selected-indicator {
     top: 25px;
-  }
-
-    .shipping-section {
-    width: 100%;
-    order: 1; /* Places shipping section first */
   }
 
   /* Shipping options */
