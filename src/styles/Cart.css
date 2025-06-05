@@ -528,14 +528,17 @@
     padding: 0 15px;
     gap: 30px; 
   }
-
+  .cart-left-column {
+    width: 100%;
+  }
   .order-summary {
     width: 100%;
-    position: static; 
-    box-shadow: none;
-    padding: 0; 
-    margin: 20px 0; 
+    max-width: none; 
   }
+  .cart-right-column {
+    width: 100%;
+  }
+  
 
   .summary-card {
     padding: 20px;
