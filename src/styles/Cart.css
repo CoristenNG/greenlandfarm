@@ -528,90 +528,13 @@
     padding: 0 15px;
     gap: 30px; 
   }
-  .cart-left-column {
-    width: 100%;
-  }
-  .order-summary {
-    width: 100%;
-    max-width: none; 
-  }
-  .cart-right-column {
-    width: 100%;
-  }
-  
 
-  .summary-card {
-    padding: 20px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-  }
-
-  /* Cart items adjustments */
-  .cart-item {
-    flex-direction: row; 
-    align-items: center;
-    padding: 15px 0; 
-  }
-
-  .cart-box {
-    flex: 1; 
-    min-width: 0;
-  }
-
-  .item-image {
-    width: 50px;
-    height: 50px;
-  }
-
-  .item-info h3 {
-    font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .quantity-controls {
-    padding: 6px 12px;
-    gap: 8px;
-  }
-
-  .quantity-button {
-    width: 24px;
-    height: 24px;
-  }
-
-  /* Address cards */
-  .address-card {
-    padding: 12px;
-    margin-bottom: 12px;
-  }
-
-  .address-selected-indicator {
-    top: 25px;
-  }
-
-  /* Shipping options */
-  .shipping-mode-section {
-    display: block; /* Show on mobile */
-    margin-bottom: 20px;
-  }
-
-  /* Bulk order info */
-  .bulk-order-info {
-    display: block; /* Show on mobile */
-    margin-top: 20px;
-    font-size: 13px;
-  }
-
-  /* Checkout button */
-  .checkout-button {
-    margin-top: 20px;
-  }
 }
 
 /* Small mobile devices */
 @media screen and (max-width: 480px) {
   .cart-content {
+    flex-direction: column;
     padding: 0 10px;
   }
 
