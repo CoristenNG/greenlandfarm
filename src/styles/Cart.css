@@ -523,154 +523,119 @@
 
 /* Responsive styles */
 @media screen and (max-width: 768px) {
- .cart-content {
-    grid-template-columns: 1fr;
-    padding: 0 15px;
-  }
-
-  .cart-item {
+  .cart-content {
     flex-direction: column;
-    gap: 15px;
-    padding: 15px;
+    padding: 0 15px;
+    gap: 30px; /* Add gap between stacked columns */
   }
 
-  .cart-box {
-    width: 100%;
-    justify-content: flex-start;
-    gap: 15px;
-  }
-
-  .quantity-controls {
-    width: 100%;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-top: 1px solid #eee;
-  }
-
-   .order-summary {
-    position: sticky;
-    bottom: 0;
-    background: white;
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    border-radius: 12px 12px 0 0;
-    margin: 0 -15px;
+  .order-summary {
+    width: 100%; /* Full width on mobile */
+    position: static; /* Remove sticky positioning */
+    box-shadow: none; /* Remove shadow */
+    padding: 0; /* Remove extra padding */
+    margin: 20px 0; /* Add margin for separation */
   }
 
   .summary-card {
-    padding: 0;
-    box-shadow: none;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
   }
 
-  /* Collapsible sections on mobile */
-  .shipping-mode-section,
-  .coupon-section {
-    display: none;
+  /* Cart items adjustments */
+  .cart-item {
+    flex-direction: row; /* Keep items in row even on mobile */
+    align-items: center;
+    padding: 15px 0; /* Adjust padding */
   }
 
-  .order-totals {
-    margin-top: 0;
+  .cart-box {
+    flex: 1; /* Allow item info to take available space */
+    min-width: 0; /* Prevent overflow */
   }
 
-  /* Simplify total rows on mobile */
-  .total-row {
+  .item-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .item-info h3 {
     font-size: 14px;
-    margin: 5px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .grand-total-row {
-    font-size: 16px;
-    margin: 10px 0;
+  .quantity-controls {
+    padding: 6px 12px;
+    gap: 8px;
   }
 
-  /* Mobile-friendly address cards */
+  .quantity-button {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Address cards */
   .address-card {
     padding: 12px;
-    margin: 10px 0;
+    margin-bottom: 12px;
   }
 
-  .address-details {
-    font-size: 14px;
+  .address-selected-indicator {
+    top: 25px;
   }
 
-  /* Mobile-friendly form modal */
-  .address-modal {
-    width: 90%;
-    max-height: 90vh;
-    margin: 20px;
+  /* Shipping options */
+  .shipping-mode-section {
+    display: block; /* Show on mobile */
+    margin-bottom: 20px;
   }
 
-  /* Adjust cart item image size */
-  .item-image {
-    width: 80px;
-    height: 80px;
-  }
-
-  /* Make buttons more touchable */
-  .quantity-button,
-  .remove-all-button,
-  .add-location-button,
-  .checkout-button {
-    min-height: 44px;
-    padding: 10px 15px;
-  }
-
-  /* Adjust spacing for warning message */
-  .warning-message {
-    margin: 15px 0;
+  /* Bulk order info */
+  .bulk-order-info {
+    display: block; /* Show on mobile */
+    margin-top: 20px;
     font-size: 13px;
   }
 
-  /* Hide bulk order info on mobile */
-  .bulk-order-info {
-    display: none;
-  }
-
-  /* Make checkout button sticky */
+  /* Checkout button */
   .checkout-button {
-    position: sticky;
-    bottom: 0;
-    width: 100%;
-    margin: 0;
-    border-radius: 0;
+    margin-top: 20px;
   }
 }
 
 /* Small mobile devices */
 @media screen and (max-width: 480px) {
-   .cart-content {
+  .cart-content {
     padding: 0 10px;
-    gap: 20px;
-  }
-
-  .cart-container {
-    padding: 10px;
   }
 
   .cart-header h1 {
-    font-size: 20px;
-  }
-
-  .item-info h3 {
-    font-size: 14px;
-  }
-
-  .item-info p {
-    font-size: 13px;
-  }
-
-  .quantity-value {
-    font-size: 14px;
-    min-width: 30px;
+    font-size: 24px;
   }
 
   .cart-items-header {
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
+    flex-direction: row; /* Keep header in row */
+    align-items: center;
   }
 
-  .cart-items-header h2 {
-    font-size: 16px;
+  .item-info {
+    max-width: 150px; /* Prevent text overflow */
+  }
+
+  .quantity-controls {
+    padding: 5px 10px;
+  }
+
+  .address-details {
+    padding-left: 20px;
+    margin-left: 15px;
+  }
+
+  .address-selected-indicator {
+    top: 20px;
+    left: 10px;
   }
 }
