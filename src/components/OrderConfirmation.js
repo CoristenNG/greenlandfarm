@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/Cart.css";
 import Confirm from "../assets/confirm.png";
+import { Plane, Check } from 'lucide-react';
 
 const OrderConfirmation = ({ customerName, orderNumber, onViewOrder }) => {
   return (
@@ -18,42 +19,50 @@ const OrderConfirmation = ({ customerName, orderNumber, onViewOrder }) => {
           </p>
         </div>
 
-        <div className="order-timeline">
-          <h2>Order Timeline</h2>
-          <div className="timeline-steps">
-            <div className="timeline-step active">
-              <div className="step-indicator"></div>
-              <div className="step-details">
-                <div className="step-title">Order Placed</div>
-                <div className="step-status">Just now</div>
-              </div>
-            </div>
-            <div className="timeline-step">
-              <div className="step-indicator"></div>
-              <div className="step-details">
-                <div className="step-title">Processing</div>
-              </div>
-            </div>
-            <div className="timeline-step">
-              <div className="step-indicator"></div>
-              <div className="step-details">
-                <div className="step-title">Packed</div>
-              </div>
-            </div>
-            <div className="timeline-step">
-              <div className="step-indicator"></div>
-              <div className="step-details">
-                <div className="step-title">Out for Delivery</div>
-              </div>
-            </div>
-            <div className="timeline-step">
-              <div className="step-indicator"></div>
-              <div className="step-details">
-                <div className="step-title">Delivered</div>
-              </div>
-            </div>
-          </div>
-        </div>
+<div className="order-timeline">
+  <h2>Order Timeline</h2>
+  <div className="timeline-steps">
+    <div className="timeline-step active first-step">
+      <div className="step-date">May 20</div>
+      <div className="step-indicator">
+        <Plane size={18} />
+      </div>
+      <div className="step-details">
+        <div className="step-title">Order Placed</div>
+      </div>
+    </div>
+    <div className="timeline-step active">
+      <div className="step-indicator">
+        <Check size={18} />
+      </div>
+      <div className="step-details">
+        <div className="step-title">Processing</div>
+      </div>
+    </div>
+    <div className="timeline-step active">
+      <div className="step-indicator">
+        <Check size={18} />
+      </div>
+      <div className="step-details">
+        <div className="step-title">Shipped</div>
+      </div>
+    </div>
+    <div className="timeline-step active">
+      <div className="step-indicator">
+        <Check size={18} />
+      </div>
+      <div className="step-details">
+        <div className="step-title">Out for Delivery</div>
+      </div>
+    </div>
+    <div className="timeline-step">
+      <div className="step-indicator"></div>
+      <div className="step-details">
+        <div className="step-title">Delivered</div>
+      </div>
+    </div>
+  </div>
+</div>
 
         <button onClick={onViewOrder} className="view-order-button">
           Open Order Page
