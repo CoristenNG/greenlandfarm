@@ -14,6 +14,8 @@ import Slide1 from "../assets/slide1.png";
 import Slide2 from "../assets/slide2.png";
 import SmallAbout from "../assets/smallAbout.png";
 import BigAbout from "../assets/bigAbout.png";
+import Team1 from "../assets/team1.png";
+import Team2 from "../assets/team2.png";
 import {
   ShoppingBasket,
   Utensils,
@@ -180,7 +182,7 @@ function Home() {
       <section className="services-section">
         <div className="section-header">
           <h2 className="section-subtitle">What We Offer</h2>
-          <h3 className="section-title">Services – Bridging Farm to Market</h3>
+          <h3 className="section-title">Services – Bridging Farm <br></br>to Market</h3>
         </div>
 
         <div className="services-grid">
@@ -252,6 +254,45 @@ function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="team-section">
+        <div className="team-container">
+          <div className="team-content">
+            <h5 className="team-title">Our Team</h5>
+            <h3 className="team-subtitle">Growing Stronger Every  Season</h3>
+            <p className="team-description">
+              Behind every crisp tomato and smooth pepper is a team of growers,
+              logistics experts, and coordinators – all working with love,
+              precision, and vibes.
+            </p>
+            <button className="team-button">Learn More</button>
+          </div>
+
+          <div className="team-slider">
+            <Swiper
+              modules={[Autoplay]}
+              spaceBetween={30}
+              slidesPerView={2.2} 
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              loop={true}
+              className="team-image-slider"
+            >
+              <SwiperSlide>
+                <img src={Team1} alt="Team working at greenhouse" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={Team2} alt="Team harvesting produce" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={Team1} alt="Team packaging products" />
+              </SwiperSlide>
+            </Swiper>
           </div>
         </div>
       </section>
