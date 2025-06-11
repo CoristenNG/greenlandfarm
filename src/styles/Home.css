@@ -1,0 +1,152 @@
+.home-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.hero-section {
+  background-image: url("../assets/homeImg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  padding-left: 5%; 
+  color: white;
+  position: relative;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.hero-contents {
+  z-index: 1;
+  max-width: 800px;
+  padding: 20px;
+  margin-left: 0; 
+}
+
+.hero-contents h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.hero-text {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  line-height: 1.6;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.cta-button {
+  padding: 12px 30px;
+  background-color: #4caf50; /* Green color, change as needed */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+  background-color: #45a049;
+}
+
+.categories-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.section-header {
+  text-align: center;
+  margin: 0 auto;
+  padding: 20px 10px;
+}
+
+.section-name {
+  color: #79A637;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 10px 0;
+  line-height: 1.2;
+}
+
+.section-text {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-top: 12px;
+  margin-left: auto;
+  margin-right: auto;
+} 
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.category-card {
+  background-color: #e8f2f3;
+  color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.category-card.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+.category-icon {
+  margin-bottom: 10px;
+}
+
+.category-icon img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.category-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.all-categories {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.all-categories-link {
+  color: #4caf50;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+}
