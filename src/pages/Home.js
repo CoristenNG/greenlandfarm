@@ -6,6 +6,12 @@ import Vegetables from "../assets/vegetables.png";
 import Snail from "../assets/snail.png";
 import Fish from "../assets/fish.png";
 import AllCategories from "../assets/allCate.png";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import Slide1 from "../assets/slide1.png";
+import Slide2 from "../assets/slide2.png";
 
 function Home() {
   const categories = [
@@ -57,6 +63,37 @@ function Home() {
           ))}
         </div>
       </div>
+
+      <section className="slider-section">
+        <Swiper
+          modules={[Autoplay, Pagination]}
+          spaceBetween={30}
+          slidesPerView={1.5} // Show 1.5 slides
+          centeredSlides={false}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
+          pagination={{ clickable: true }}
+          loop={true}
+          className="pure-image-slider"
+        >
+          <SwiperSlide>
+            <img
+              src={Slide1}
+              alt="Fresh farm produce"
+              className="slider-image"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src={Slide2}
+              alt="Healthy vegetables"
+              className="slider-image"
+            />
+          </SwiperSlide>
+        </Swiper>
+      </section>
     </div>
   );
 }

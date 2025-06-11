@@ -150,3 +150,41 @@
   font-size: 1rem;
   font-weight: 500;
 }
+.slider-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.pure-image-slider {
+  width: 100%;
+  padding-right: 20px; /* Add padding to show part of next slide */
+}
+
+.slider-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Make sure Swiper pagination is visible */
+.swiper-pagination {
+  position: relative;
+  margin-top: 20px;
+}
+
+.swiper-pagination-bullet-active {
+  background: #79A637;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .pure-image-slider {
+    padding-right: 0;
+  }
+  
+  .swiper {
+    slidesPerView: 1;
+  }
+}
