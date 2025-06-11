@@ -14,7 +14,13 @@ import Slide1 from "../assets/slide1.png";
 import Slide2 from "../assets/slide2.png";
 import SmallAbout from "../assets/smallAbout.png";
 import BigAbout from "../assets/bigAbout.png";
-import { Bubbles } from "lucide-react";
+import {
+  ShoppingBasket,
+  Utensils,
+  Truck,
+  BookOpen,
+  Bubbles,
+} from "lucide-react";
 
 function Home() {
   const categories = [
@@ -114,7 +120,6 @@ function Home() {
             </p>
 
             <div className="about-features">
-
               <div className="feature-item">
                 <div className="feature-icon">
                   <Bubbles size={20} />
@@ -134,10 +139,10 @@ function Home() {
                 </div>
                 <div className="feature-content">
                   <h3>Farm-to-Door Delivery</h3>
-                <p>
-                  Fresh produce delivered straight from our greenhouse to your
-                  door — fast, clean, and convenient.
-                </p>
+                  <p>
+                    Fresh produce delivered straight from our greenhouse to your
+                    door — fast, clean, and convenient.
+                  </p>
                 </div>
               </div>
               <div className="feature-item">
@@ -145,14 +150,13 @@ function Home() {
                   <Bubbles size={20} />
                 </div>
                 <div className="feature-content">
-                 <h3>One Shop, Many Produce Options</h3>
-                <p>
-                  From Vegetables, Fruits, Poultry and more — get all your
-                  essentials from one trusted source.
-                </p>
+                  <h3>One Shop, Many Produce Options</h3>
+                  <p>
+                    From Vegetables, Fruits, Poultry and more — get all your
+                    essentials from one trusted source.
+                  </p>
                 </div>
               </div>
-
             </div>
           </div>
 
@@ -168,6 +172,85 @@ function Home() {
                 alt="Secondary farm image"
                 className="side-image"
               />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="services-section">
+        <div className="section-header">
+          <h2 className="section-subtitle">What We Offer</h2>
+          <h3 className="section-title">Services – Bridging Farm to Market</h3>
+        </div>
+
+        <div className="services-grid">
+          {/* First Row */}
+          <div className="service-row">
+            <div className="service-card">
+              <div className="service-content">
+                <div className="service-icon">
+                  <ShoppingBasket size={24} />
+                </div>
+                <div className="service-text">
+                  <h4>Agro–Education (Coming Soon)</h4>
+                  <p>
+                    We're preparing to share our methods – hands-on training,
+                    virtual sessions, and more to empower the next generation of
+                    greenhouse farmers.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="service-card">
+              <div className="service-content">
+                <div className="service-icon">
+                  <Utensils size={24} />
+                </div>
+                <div className="service-text">
+                  <h4>Agro–Education (Coming Soon)</h4>
+                  <p>
+                    We're preparing to share our methods – hands-on training,
+                    virtual sessions, and more to empower the next generation of
+                    greenhouse farmers.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Second Row */}
+          <div className="service-row">
+            <div className="service-card">
+              <div className="service-content">
+                <div className="service-icon">
+                  <Truck size={24} />
+                </div>
+                <div className="service-text">
+                  <h4>Agro–Education (Coming Soon)</h4>
+                  <p>
+                    We're preparing to share our methods – hands-on training,
+                    virtual sessions, and more to empower the next generation of
+                    greenhouse farmers.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="service-card">
+              <div className="service-content">
+                <div className="service-icon">
+                  <BookOpen size={24} />
+                </div>
+                <div className="service-text">
+                  <h4>Agro–Education (Coming Soon)</h4>
+                  <p>
+                    We're preparing to share our methods – hands-on training,
+                    virtual sessions, and more to empower the next generation of
+                    greenhouse farmers.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
