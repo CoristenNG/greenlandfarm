@@ -1,0 +1,167 @@
+import React, { useState, useRef, useEffect } from "react";
+
+export default function OTPVerification() {
+    const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+    const [isLoading, setIsLoading] = useState(false);
+    const inputRefs = useRef([]);
+
+    useEffect(() => {
+        // Focus on first input when component mounts
+        if (inputRefs.current[0]) {
+            inputRefs.current[0].focus();
+        }
+    }, []);
+
+    const handleInputChange = (index, value) => {
+        // Only allow single digit
+        if (value.length > 1) return;
+
+        const newOtp = [...otp];
+        newOtp[index] = value;
+        setOtp(newOtp);
+
+        // Auto-focus next input
+        if (value && index < 5) {
+            inputRefs.current[index + 1]?.focus();
+        }
+    };
+
+    const handleKeyDown = (index, e) => {
+        // Handle backspace
+        if (e.key === "Backspace" && !otp[index] && index > 0) {
+            inputRefs.current[index - 1]?.focus();
+        }
+
+        // Handle paste
+        if (e.key === "v" && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault();
+            navigator.clipboard.readText().then((text) => {
+                const digits = text.replace(/\D/g, "").slice(0, 6);
+                const newOtp = [...otp];
+                for (let i = 0; i < 6; i++) {
+                    newOtp[i] = digits[i] || "";
+                }
+                setOtp(newOtp);
+
+                // Focus on the last filled input or next empty one
+                const nextIndex = Math.min(digits.length, 5);
+                inputRefs.current[nextIndex]?.focus();
+            });
+        }
+    };
+
+    const handleResend = () => {
+        // Simulate resend action
+        alert("New verification code sent to your email!");
+    };
+
+    const handleVerify = () => {
+        const otpValue = otp.join("");
+        if (otpValue.length !== 6) {
+            alert("Please enter all 6 digits");
+            return;
+        }
+
+        setIsLoading(true);
+        // Simulate verification process
+        setTimeout(() => {
+            setIsLoading(false);
+            alert(`Verification successful! Code: ${otpValue}`);
+        }, 2000);
+    };
+
+    const isComplete = otp.every((digit) => digit !== "");
+
+    return (
+        <div className="min-h-fit  flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
+                {/* Header */}
+                <div className="text-center mb-8">
+                    <h1 className="text-2xl font-bold text-gray-900 mb-3">
+                        Email Verification
+                    </h1>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                        Please check your provided email address, we've sent a 6
+                        digit code to verify the email address
+                    </p>
+                </div>
+
+                {/* OTP Input Fields */}
+                <div className="flex justify-center gap-3 mb-6">
+                    {otp.map((digit, index) => (
+                        <input
+                            key={index}
+                            ref={(el) => (inputRefs.current[index] = el)}
+                            type="text"
+                            inputMode="numeric"
+                            maxLength="1"
+                            value={digit}
+                            onChange={(e) =>
+                                handleInputChange(index, e.target.value)
+                            }
+                            onKeyDown={(e) => handleKeyDown(index, e)}
+                            className={`w-12 h-12 text-center text-lg font-semibold border-2 rounded-lg focus:outline-none transition-all duration-200 ${
+                                digit
+                                    ? "border-green-500 bg-green-50 text-green-800"
+                                    : "border-gray-300 hover:border-gray-400 focus:border-blue-500"
+                            }`}
+                        />
+                    ))}
+                </div>
+
+                {/* Resend Code */}
+                <div className="text-center mb-6">
+                    <span className="text-gray-500 text-sm">
+                        Can't see the code??{" "}
+                    </span>
+                    <button
+                        onClick={handleResend}
+                        className="text-green-600 text-sm font-medium hover:text-green-700 transition-colors duration-200"
+                    >
+                        Resend
+                    </button>
+                </div>
+
+                {/* Verify Button */}
+                <button
+                    onClick={handleVerify}
+                    disabled={!isComplete || isLoading}
+                    className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200 ${
+                        isComplete && !isLoading
+                            ? "bg-green-600 hover:bg-green-700 transform hover:scale-[1.02] active:scale-[0.98]"
+                            : "bg-gray-400 cursor-not-allowed"
+                    }`}
+                >
+                    {isLoading ? (
+                        <div className="flex items-center justify-center">
+                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                            Verifying...
+                        </div>
+                    ) : (
+                        "Verify"
+                    )}
+                </button>
+
+                {/* Terms and Privacy */}
+                <div className="text-center mt-6">
+                    <p className="text-xs text-gray-500 leading-relaxed">
+                        By continuing, you agree to Urban Lagos's{" "}
+                        <a
+                            href="#"
+                            className="text-green-600 hover:text-green-700 underline"
+                        >
+                            Terms of Service
+                        </a>{" "}
+                        and acknowledge that you've read our{" "}
+                        <a
+                            href="#"
+                            className="text-green-600 hover:text-green-700 underline"
+                        >
+                            Privacy Policy
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    );
+}
