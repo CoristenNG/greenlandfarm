@@ -9,7 +9,9 @@ import {
     EyeOff,
     Menu,
     X,
+    PanelLeftOpen,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const SettingsPage = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -26,10 +28,21 @@ const SettingsPage = () => {
     });
 
     const sidebarItems = [
-        { icon: Package, label: "My Orders", active: false },
-        { icon: MapPin, label: "Shipping Address", active: false },
-        { icon: Settings, label: "Settings", active: true },
-        { icon: LogOut, label: "Logout", active: false },
+        { icon: Package, label: "My Orders", link: "/order", active: false },
+        {
+            icon: MapPin,
+            label: "Shipping Address",
+            link: "/addresses",
+            active: false,
+        },
+        { icon: Settings, label: "Settings", link: "/settings", active: true },
+        {
+            icon: LogOut,
+            label: "Logout",
+            link: "",
+            logout: true,
+            active: false,
+        },
     ];
 
     const handleInputChange = (field, value) => {
@@ -54,9 +67,9 @@ const SettingsPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen max-w-6xl mx-auto">
             {/* Header */}
-            <header className="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-4">
+            <header className="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 md:py-4 sticky top-38 md:top-24 z-40">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2 text-sm text-gray-500">
@@ -69,7 +82,6 @@ const SettingsPage = () => {
                             </span>
                         </div>
 
-                        {/* Mobile menu button */}
                         <button
                             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                             className="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
@@ -77,7 +89,7 @@ const SettingsPage = () => {
                             {isSidebarOpen ? (
                                 <X size={24} />
                             ) : (
-                                <Menu size={24} />
+                                <PanelLeftOpen size={24} />
                             )}
                         </button>
                     </div>
@@ -89,52 +101,50 @@ const SettingsPage = () => {
                     {/* Sidebar */}
                     <aside
                         className={`
-            fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:shadow-sm lg:rounded-lg
-            ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
-          `}
+                                                fixed inset-y-0 left-0 w-64 z-40 md:z-0 md:sticky top-38 md:top-0 bg-white shadow-sm md:shadow-none  transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:rounded-lg
+                                                ${
+                                                    isSidebarOpen
+                                                        ? "translate-x-0"
+                                                        : "-translate-x-full"
+                                                }
+                                            `}
                     >
                         <div className="p-6">
                             <nav className="space-y-2">
                                 {sidebarItems.map((item, index) => (
-                                    <a
+                                    <Link
                                         key={index}
-                                        href="#"
+                                        to={item.link}
                                         className={`
-                      flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors
-                      ${
-                          item.active
-                              ? "bg-[#4CAF50] text-white"
-                              : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                      }
-                    `}
+                                          flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors
+                                          ${
+                                              item.active
+                                                  ? "bg-[#4CAF50] text-white"
+                                                  : "text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-green-100"
+                                          }
+                                        `}
                                         onClick={(e) => {
-                                            e.preventDefault();
-                                            setIsSidebarOpen(false);
+                                            if (item.logout) {
+                                                e.preventDefault();
+                                                setIsSidebarOpen(false);
+                                            }
                                         }}
                                     >
                                         <item.icon size={20} />
                                         <span>{item.label}</span>
-                                    </a>
+                                    </Link>
                                 ))}
                             </nav>
                         </div>
                     </aside>
 
-                    {/* Overlay */}
-                    {isSidebarOpen && (
-                        <div
-                            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-                            onClick={() => setIsSidebarOpen(false)}
-                        />
-                    )}
-
                     {/* Main Content */}
                     <main className="flex-1 min-w-0">
-                        <div className="bg-white rounded-lg shadow-sm p-6 sm:p-8">
+                        <div className="bg-white rounded-lg  p-6 sm:p-8">
                             <h1 className="text-2xl font-semibold text-gray-900 mb-2">
                                 Settings
                             </h1>
-                            <h2 className="text-lg text-gray-600 mb-8">
+                            <h2 className="text-md text-gray-600 mb-8">
                                 Personal Information
                             </h2>
 
@@ -179,8 +189,8 @@ const SettingsPage = () => {
                             </div>
 
                             {/* Change Email Address & Phone Number */}
-                            <div className="mb-8">
-                                <h3 className="text-lg font-medium text-gray-900 mb-6">
+                            <div className="mb-8 !mt-14">
+                                <h3 className="text-md  font-medium text-gray-700 mb-6">
                                     Change Email Address & Phone Number
                                 </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

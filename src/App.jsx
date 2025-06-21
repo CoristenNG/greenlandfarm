@@ -15,10 +15,14 @@ import OtpPage from "./pages/auth/otpPage";
 import ForgotPassword from "./pages/auth/forgotPassword";
 import ResetPassword from "./pages/auth/resetPassword";
 import OrderDetailsPage from "./pages/order/orderProduct";
+import Navbar2 from "./components/Navbar2";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
     return (
         <CartProvider>
+            <Toaster />
+
             <div className="bg-white">
                 <Router>
                     <Routes>
@@ -37,7 +41,7 @@ const App = () => {
                             element={<ForgotPassword />}
                         />
                     </Routes>
-                    <Navbar />
+                    <Navbar2 />
                     <Routes>
                         {/* <Route path="/" element={<Home />} /> */}
                         <Route path="/" element={<Home />} />
@@ -48,7 +52,10 @@ const App = () => {
                         />
                         <Route path="/cart" element={<Cart />} />
                         <Route path="/order" element={<OrdersPage />} />
-                        <Route path="/order/:id" element={<OrderDetailsPage />} />
+                        <Route
+                            path="/order/:id"
+                            element={<OrderDetailsPage />}
+                        />
                         <Route path="/settings" element={<SettingsPage />} />
                     </Routes>
                     <Footer />

@@ -6,10 +6,11 @@ import {
     Settings,
     LogOut,
     Package,
-    Menu,
+    PanelLeftOpen,
     X,
 } from "lucide-react";
 import OrderTrackingPage from "./Orderview";
+import { Link } from "react-router-dom";
 
 export default function OrderDetailsPage() {
     const [showCancelModal, setShowCancelModal] = useState(false);
@@ -50,10 +51,21 @@ export default function OrderDetailsPage() {
         },
     ];
     const sidebarItems = [
-        { icon: Package, label: "My Orders", active: false },
-        { icon: MapPin, label: "Shipping Address", active: false },
-        { icon: Settings, label: "Settings", active: true },
-        { icon: LogOut, label: "Logout", active: false },
+        { icon: Package, label: "My Orders", link: "/order", active: true },
+        {
+            icon: MapPin,
+            label: "Shipping Address",
+            link: "/addresses",
+            active: false,
+        },
+        { icon: Settings, label: "Settings", link: "/settings", active: false },
+        {
+            icon: LogOut,
+            label: "Logout",
+            link: "",
+            logout: true,
+            active: false,
+        },
     ];
     const customerDetails = {
         fullName: "Ayobami Kenneth Bully",
@@ -85,9 +97,9 @@ export default function OrderDetailsPage() {
     };
 
     return (
-        <div className="min-h-screen max-w-6xl mx-auto mb-20 mt-px relative">
+        <div className="min-h-screen md:max-w-6xl mx-auto mb-20 mt-px relative">
             {/* Header */}
-            <header className="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-4 sticky top-30 z-40">
+            <header className="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 md:py-4 sticky top-38 md:top-24 z-40">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2 text-sm text-gray-500">
@@ -107,7 +119,7 @@ export default function OrderDetailsPage() {
                             {isSidebarOpen ? (
                                 <X size={24} />
                             ) : (
-                                <Menu size={24} />
+                                <PanelLeftOpen size={24} />
                             )}
                         </button>
                     </div>
@@ -118,7 +130,7 @@ export default function OrderDetailsPage() {
                     {/* Sidebar */}
                     <aside
                         className={`
-                            fixed inset-y-0 left-0 z-50 w-64 bg-white  transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:rounded-lg
+                            fixed inset-y-0 left-0 w-64 z-40 md:z-0 md:sticky top-38 md:top-0 bg-white shadow-sm md:shadow-none  transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:rounded-lg
                             ${
                                 isSidebarOpen
                                     ? "translate-x-0"
@@ -129,71 +141,68 @@ export default function OrderDetailsPage() {
                         <div className="p-6">
                             <nav className="space-y-2">
                                 {sidebarItems.map((item, index) => (
-                                    <a
+                                    <Link
                                         key={index}
-                                        href="#"
+                                        to={item.link}
                                         className={`
-                      flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors
-                      ${
-                          item.active
-                              ? "bg-[#4CAF50] text-white"
-                              : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                      }
-                    `}
+                                         flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors
+                                         ${
+                                             item.active
+                                                 ? "bg-[#4CAF50] text-white"
+                                                 : "text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-green-100"
+                                         }
+                                       `}
                                         onClick={(e) => {
-                                            e.preventDefault();
-                                            setIsSidebarOpen(false);
+                                            if (item.logout) {
+                                                e.preventDefault();
+                                                setIsSidebarOpen(false);
+                                            }
                                         }}
                                     >
                                         <item.icon size={20} />
                                         <span>{item.label}</span>
-                                    </a>
+                                    </Link>
                                 ))}
                             </nav>
                         </div>
                     </aside>
 
                     {/* Overlay */}
-                    {isSidebarOpen && (
-                        <div
-                            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-                            onClick={() => setIsSidebarOpen(false)}
-                        />
-                    )}
+                   
 
                     {/* Main Content */}
-                    <div className="flex-1 p-6">
+                    <div className="flex-1 md:p-6">
                         <div className="max-w-6xl mx-auto">
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                                 {/* Order Details */}
                                 <div className="lg:col-span-2">
                                     {/* Header */}
                                     {/* <div className="  bg-white"> */}
-                                        <div className="flex items-center justify-between mb-2">
-                                            <div className="flex items-center">
-                                                <button className="flex items-center text-gray-600 hover:text-gray-800 mr-4">
-                                                    <ArrowLeft className="w-5 h-5 mr-2" />
-                                                    Back to Orders Page
-                                                </button>
-                                            </div>
-                                        </div>
-                                        {/* Order Header */}
-                                        <div className="flex items-center justify-between mb-6">
-                                            <div className="flex items-center">
-                                                <h1 className="text-xl font-bold text-gray-900 mr-4">
-                                                    Order ORD-250615-0012
-                                                </h1>
-                                                <span className="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-sm font-medium">
-                                                    In Progress
-                                                </span>
-                                            </div>
-                                            <button
-                                                onClick={handleCancelOrder}
-                                                className="px-4 h-8 bg-green-500 text-white text-xs rounded-lg hover:bg-green-600 transition-colors"
-                                            >
-                                                Cancel Order
+                                    <div className="flex items-center justify-between mb-2">
+                                        <div className="flex items-center">
+                                            <button className="flex items-center text-gray-600 hover:text-gray-800 mr-4">
+                                                <ArrowLeft className="w-5 h-5 mr-2" />
+                                                Back to Orders Page
                                             </button>
                                         </div>
+                                    </div>
+                                    {/* Order Header */}
+                                    <div className="flex items-center justify-between mb-6">
+                                        <div className="flex items-center">
+                                            <h1 className="text-xl font-bold text-gray-900 mr-4">
+                                                Order ORD-250615-0012
+                                            </h1>
+                                            <span className="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-sm font-medium">
+                                                In Progress
+                                            </span>
+                                        </div>
+                                        <button
+                                            onClick={handleCancelOrder}
+                                            className="px-4 h-8 bg-green-500 text-white text-xs rounded-lg hover:bg-green-600 transition-colors"
+                                        >
+                                            Cancel Order
+                                        </button>
+                                    </div>
                                     {/* </div> */}
                                     <div className="bg-white rounded-lg  ">
                                         {/* Order Items */}

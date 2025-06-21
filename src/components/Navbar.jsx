@@ -65,8 +65,8 @@ const Navbar = () => {
                         </div>
 
                         {/* Account & Cart */}
-                        <div className="user-actions">
-                            <Link to="/login" className="nav-link">
+                        <div className="user-actions items-center">
+                            <Link to="/settings" className="nav-link">
                                 <button className="action-btn">
                                     <User size={18} />
                                     <span className="action-text">Account</span>

@@ -1,7 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { setCredentials, useLoginMutation } from "../../redux/slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../components/cards/loading";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
+    const [login, { isLoading }] = useLoginMutation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { isAuthenticated } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/");
+        }
+    }, [isAuthenticated, navigate]);
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         email: "",
@@ -15,9 +30,18 @@ const LoginPage = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form submitted:", formData);
+        try {
+            const result = await login(formData).unwrap();
+            console.log(result);
+            dispatch(setCredentials(result.user));
+            toast.success("Login successful!");
+            navigate("/");
+        } catch (err) {
+            console.error("Login failed:", err);
+            toast.error(err.data?.message || "Login failed");
+        }
     };
 
     const handleGoogleSignUp = () => {
@@ -46,17 +70,17 @@ const LoginPage = () => {
             <div className="absolute md:right-32 z-10 w-full max-w-md">
                 <div className="bg-white rounded-2xl md:shadow-2xl p-8 backdrop-blur-sm">
                     {/* Header */}
-                    <div className="text-center mb-8">
+                    <div className="text-center !mb-13 md:mb-8">
                         <h1 className="text-xl font-bold text-gray-900 mb-2">
                             Welcome to Urban Lagos
                         </h1>
                     </div>
 
                     {/* Form */}
-                    <div className="space-y-4">
+                    <div className="space-y-8 md:space-y-4">
                         {/* Email Address */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                            <label className="block text-sm font-medium text-gray-700 mb-3 md:mb-1.5">
                                 Email Address
                             </label>
                             <input
@@ -73,7 +97,7 @@ const LoginPage = () => {
 
                         {/* Password */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                            <label className="block text-sm font-medium text-gray-700 mb-3 md:mb-1.5">
                                 Password
                             </label>
                             <div className="relative">
@@ -119,7 +143,7 @@ const LoginPage = () => {
                             onClick={handleSubmit}
                             className="w-full bg-[#79A637] text-white py-2.5 px-4 mt-4 rounded-lg font-semibold hover:bg-green-700 focus:ring-4 focus:ring-green-200 transition-all duration-200 transform hover:scale-[1.02]"
                         >
-                            Login
+                            {isLoading ? <LoadingSpinner /> : "Login"}
                         </button>
                     </div>
 

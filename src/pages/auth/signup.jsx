@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { setCredentials, useRegisterMutation } from "../../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
+    const [register, { isLoading }] = useRegisterMutation();
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
+        first_name: "",
+        last_name: "",
         email: "",
         password: "",
     });
@@ -17,9 +24,16 @@ const SignUpPage = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form submitted:", formData);
+        try {
+            const result = await register(formData).unwrap();
+            dispatch(setCredentials(result.data));
+            
+            navigate("/");
+        } catch (err) {
+            toast.error(err.data?.message || "Login failed");
+        }
     };
 
     const handleGoogleSignUp = () => {
@@ -65,10 +79,10 @@ const SignUpPage = () => {
                                 <input
                                     type="text"
                                     placeholder="Enter your first name"
-                                    value={formData.firstName}
+                                    value={formData.first_name}
                                     onChange={(e) =>
                                         handleInputChange(
-                                            "firstName",
+                                            "first_name",
                                             e.target.value
                                         )
                                     }
@@ -83,10 +97,10 @@ const SignUpPage = () => {
                                 <input
                                     type="text"
                                     placeholder="Enter your last name"
-                                    value={formData.lastName}
+                                    value={formData.last_name}
                                     onChange={(e) =>
                                         handleInputChange(
-                                            "lastName",
+                                            "last_name",
                                             e.target.value
                                         )
                                     }
