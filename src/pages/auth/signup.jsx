@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { setCredentials, useRegisterMutation } from "../../redux/slices/authSlice";
+import {
+    setCredentials,
+    useRegisterMutation,
+} from "../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
     const [register, { isLoading }] = useRegisterMutation();
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         first_name: "",
@@ -29,7 +32,7 @@ const SignUpPage = () => {
         try {
             const result = await register(formData).unwrap();
             dispatch(setCredentials(result.data));
-            
+
             navigate("/");
         } catch (err) {
             toast.error(err.data?.message || "Login failed");
@@ -167,7 +170,7 @@ const SignUpPage = () => {
                             onClick={handleSubmit}
                             className="w-full bg-[#79A637] text-white py-2.5 px-4 rounded-lg font-semibold hover:bg-green-700 focus:ring-4 focus:ring-green-200 transition-all duration-200 transform hover:scale-[1.02]"
                         >
-                            Register
+                            {isLoading ? "Creating..." : "Create Account"}
                         </button>
                     </div>
 
