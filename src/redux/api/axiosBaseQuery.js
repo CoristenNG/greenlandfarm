@@ -3,11 +3,11 @@
 import { jwtDecode } from 'jwt-decode';
 import toast from 'react-hot-toast';
 
-const server = process.env.NODE_ENV === "production" 
+export const server = process.env.NODE_ENV === "production" 
     ? "https://corislo-backend.onrender.com" 
     : "http://localhost:5001";
 
-// Clear auth data and redirect to login
+
 const handleAuthError = () => {
     localStorage.removeItem("store_token");
     localStorage.removeItem("refresh_token");
@@ -15,16 +15,14 @@ const handleAuthError = () => {
     window.location.href = "/login";
 };
 
-// Get auth headers
-const getAuthHeaders = () => {
-    const token = localStorage.getItem("store_token");
+const getAuthHeaders = async () => {
+    const token = localStorage.getItem("user_token");
     return {
         'Content-Type': 'application/json',
-        ...(token && { Authorization: `Bearer ${token}` }),
+        ...({ Authorization: `Bearer ${token}` }),
     };
 };
 
-// Show appropriate error message
 const showErrorToast = (error, response) => {
     const status = response?.status;
     const serverMessage = response?.data?.message || error.message;
@@ -75,8 +73,9 @@ export const axiosBaseQuery = () => async (requestConfig) => {
 
     try {
         // Build headers
-        const authHeaders = getAuthHeaders();
+        const authHeaders = await getAuthHeaders();
         const mergedHeaders = { ...authHeaders, ...headers };
+        console.log(mergedHeaders)
 
         // Build URL with params
         const fullUrl = new URL(`${server}/api/v1${url}`);
@@ -153,7 +152,7 @@ export const axiosBaseQuery = () => async (requestConfig) => {
 // Token validation
 const checkTokenStatus = () => {
     try {
-        const token = localStorage.getItem("store_token");
+        const token = localStorage.getItem("user_token");
         if (!token) return { isValid: false, needsRefresh: false };
 
         const decodedToken = jwtDecode(token);
@@ -175,6 +174,7 @@ const checkTokenStatus = () => {
 // Export utility functions
 export const isAuthenticated = () => {
     const { isValid } = checkTokenStatus();
+    console.log(isValid, "isValid")
     return isValid;
 };
 

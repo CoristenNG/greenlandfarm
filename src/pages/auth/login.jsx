@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { setCredentials, useLoginMutation } from "../../redux/slices/authSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../../components/cards/loading";
 import { toast } from "react-toastify";
+import { isAuthenticated } from "../../redux/api/axiosBaseQuery";
 
 const LoginPage = () => {
     const [login, { isLoading }] = useLoginMutation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { isAuthenticated } = useSelector((state) => state.auth);
+    const isAuth = isAuthenticated()
 
     useEffect(() => {
-        if (isAuthenticated) {
+        if (isAuth) {
             navigate("/");
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuth, navigate]);
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         email: "",

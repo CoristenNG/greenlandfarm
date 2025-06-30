@@ -31,10 +31,15 @@ const SignUpPage = () => {
         e.preventDefault();
         try {
             const result = await register(formData).unwrap();
-            dispatch(setCredentials(result.data));
 
-            navigate("/");
+            console.log(result);
+            dispatch(setCredentials(result.user));
+
+            if(result.type === "success") {
+                navigate(`/otp?email=${formData.email}`);
+            }
         } catch (err) {
+            console.log(err);
             toast.error(err.data?.message || "Login failed");
         }
     };
@@ -58,7 +63,6 @@ const SignUpPage = () => {
             >
                 <div className="absolute h-screen w-full top-0 left-0 opacity-50 inset-0 bg-gradient-to-br from-black via-black via-90% to-transparent "></div>
             </div>
-
             {/* Gradient Overlay */}
 
             {/* Sign Up Form */}

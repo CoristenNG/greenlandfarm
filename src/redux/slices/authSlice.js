@@ -18,7 +18,15 @@ export const authApi = createApi({
         }),
         invalidatesTags: ['User'],
       }),
-  
+      otpEmail: builder.mutation({
+        query: (credentials) => ({
+          url: '/auth/otp',
+          method: 'POST',
+          data: credentials,
+        }),
+        invalidatesTags: ['User'],
+      }),
+      
       // Register
       register: builder.mutation({
         query: (userData) => ({
@@ -31,7 +39,7 @@ export const authApi = createApi({
       // Verify OTP
       verifyOtp: builder.mutation({
         query: (otpData) => ({
-          url: '/auth/verify-otp',
+          url: '/auth/verify',
           method: 'POST',
           data: otpData,
         }),
@@ -92,12 +100,21 @@ export const authApi = createApi({
           data: { refreshToken: localStorage.getItem('refresh_token') },
         }),
       }),
+
+      changePassword: builder.mutation({
+        query: (data) =>( {
+          url: "/auth/change-password", 
+          method: "PATCH",
+          data
+        } )
+      })
     }),
   });
   
   export const {
     useLoginMutation,
     useRegisterMutation,
+    useOtpEmailMutation,
     useVerifyOtpMutation,
     useResendOtpMutation,
     useForgotPasswordMutation,
@@ -105,6 +122,7 @@ export const authApi = createApi({
     useGetUserProfileQuery,
     useLogoutMutation,
     useRefreshTokenMutation,
+    useChangePasswordMutation, 
   } = authApi;
 
 
@@ -121,20 +139,21 @@ export const authApi = createApi({
     initialState,
     reducers: {
       setCredentials: (state, action) => {
-        console.log(state, action)
         const { accessToken, ...user } = action.payload;
         state.user = user;
         state.token = accessToken;
         state.isAuthenticated = true;
-        localStorage.setItem('store_token', accessToken);
+        localStorage.setItem('user_token', accessToken);
       },
-      logoutUser: (state) => {
+      logoutUser: (state, action) => {
         state.user = null;
         state.token = null;
         state.isAuthenticated = false;
         localStorage.removeItem('store_token');
         localStorage.removeItem('refresh_token');
-        localStorage.removeItem('user_data');
+        localStorage.removeItem('user_token');
+        action.payload.navigate("/login")
+        
       },
       clearError: (state) => {
         state.error = null;

@@ -1,6 +1,27 @@
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useVerifyOtpMutation } from "../../redux/slices/authSlice";
 import OTPVerification from "./otp";
+import toast from "react-hot-toast";
 
 const OtpPage = () => {
+    const [searchParams] = useSearchParams()
+    const email = searchParams.get("email") || "";
+    console.log(email);
+    const navigate = useNavigate();
+    const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
+
+    const handleOtpVerification = async (otp) => {
+        try {
+            const result = await verifyOtp({ otp, email }).unwrap();
+            console.log(result);
+            if (result.type === "success") {
+                navigate("/");
+            }
+        } catch (err) {
+            toast.error(err.data?.message || "OTP verification failed");
+        }
+    };
+
     return (
         <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
             {/* Background Image */}
@@ -17,7 +38,11 @@ const OtpPage = () => {
 
             {/* OTP PAGE */}
             <div className="absolute md:right-32 z-10 w-full max-w-md">
-                <OTPVerification />
+                <OTPVerification
+                    onSubmit={handleOtpVerification}
+                    isLoading={isLoading}
+                    email={email}
+                />
             </div>
         </div>
     );

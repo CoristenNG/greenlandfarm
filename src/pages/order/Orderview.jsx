@@ -75,17 +75,6 @@ const OrderTrackingPage = () => {
     }
   };
 
-  const getLineClasses = (status) => {
-    switch (status) {
-      case 'completed':
-        return 'bg-green-600';
-      case 'current':
-        return 'bg-blue-600';
-      default:
-        return 'bg-gray-200';
-    }
-  };
-
   return (
     <div className="min-h-screen py-8 px-3">
       <div className="max-w-4xl mx-auto">

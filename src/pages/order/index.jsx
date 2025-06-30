@@ -7,14 +7,13 @@ import {
     Menu,
     PanelLeftOpen,
 } from "lucide-react";
-import { MapPin, Settings, LogOut, Package } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import SettingsWrapper from "../../components/wrapper/accountWrapper";
 
 export default function OrdersPage() {
     const [processingExpanded, setProcessingExpanded] = useState(true);
     const [cancelledExpanded, setCancelledExpanded] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const orders = [
         {
@@ -48,23 +47,6 @@ export default function OrdersPage() {
             status: "Delivered",
             image: "/api/placeholder/60/60",
             isPlaceholder: true,
-        },
-    ];
-    const sidebarItems = [
-        { icon: Package, label: "My Orders", link: "/order", active: true },
-        {
-            icon: MapPin,
-            label: "Shipping Address",
-            link: "/addresses",
-            active: false,
-        },
-        { icon: Settings, label: "Settings", link: "/settings", active: false },
-        {
-            icon: LogOut,
-            label: "Logout",
-            link: "",
-            logout: true,
-            active: false,
         },
     ];
     const getStatusBadge = (status) => {
@@ -115,170 +97,98 @@ export default function OrdersPage() {
     };
 
     return (
-        <div className="min-h-screen max-w-6xl mx-auto">
-            {/* Header */}
-            <header className="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 md:py-4 sticky top-38 md:top-24 z-40">
-                <div className="max-w-7xl mx-auto">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2 text-sm text-gray-500">
-                            <span>Home</span>
-                            <span>&gt;</span>
-                            <span>My Account</span>
-                            <span>&gt;</span>
-                            <span className="text-gray-900 font-medium">
-                                My Orders
-                            </span>
-                        </div>
-
+        <SettingsWrapper page="order">
+            {/* Main Content */}
+            <div className="flex-1 md:p-6">
+                <div className="bg-white rounded-lg">
+                    {/* Processing & Completed Orders Section */}
+                    <div className="border-b border-gray-300">
                         <button
-                            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                            className="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                            onClick={() =>
+                                setProcessingExpanded(!processingExpanded)
+                            }
+                            className="w-full px-6 py-4 flex items-center justify-between text-left bg-gray-50 hover:bg-gray-100"
                         >
-                            {isSidebarOpen ? (
-                                <X size={24} />
+                            <span className="font-medium text-gray-900">
+                                Processing & Completed Orders
+                            </span>
+                            {processingExpanded ? (
+                                <ChevronDown className="w-5 h-5 text-gray-400" />
                             ) : (
-                                <PanelLeftOpen size={24} />
+                                <ChevronUp className="w-5 h-5 text-gray-400" />
                             )}
                         </button>
-                    </div>
-                </div>
-            </header>
 
-            <div className="flex">
-                {/* Sidebar */}
-                <aside
-                    className={`
-                            fixed inset-y-0 left-0 w-64 z-40 md:z-0 md:sticky top-38 md:top-0 bg-white shadow-sm md:shadow-none  transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:rounded-lg
-                            ${
-                                isSidebarOpen
-                                    ? "translate-x-0"
-                                    : "-translate-x-full"
-                            }
-                        `}
-                >
-                    <div className="p-6">
-                        <nav className="space-y-2">
-                            {sidebarItems.map((item, index) => (
-                                <Link
-                                    key={index}
-                                    to={item.link}
-                                    className={`
-                      flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors
-                      ${
-                          item.active
-                              ? "bg-[#4CAF50] text-white"
-                              : "text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-green-100"
-                      }
-                    `}
-                                    onClick={(e) => {
-                                        if (item.logout) {
-                                            e.preventDefault();
-                                            setIsSidebarOpen(false);
-                                        }
-                                    }}
-                                >
-                                    <item.icon size={20} />
-                                    <span>{item.label}</span>
-                                </Link>
-                            ))}
-                        </nav>
-                    </div>
-                </aside>
-
-                {/* Main Content */}
-                <div className="flex-1 md:p-6">
-                    <div className="bg-white rounded-lg">
-                        {/* Processing & Completed Orders Section */}
-                        <div className="border-b border-gray-300">
-                            <button
-                                onClick={() =>
-                                    setProcessingExpanded(!processingExpanded)
-                                }
-                                className="w-full px-6 py-4 flex items-center justify-between text-left bg-gray-50 hover:bg-gray-100"
+                        {processingExpanded && (
+                            <div
+                                className="px-6 pb-4"
+                                onClick={() => navigate("/order/2324")}
                             >
-                                <span className="font-medium text-gray-900">
-                                    Processing & Completed Orders
-                                </span>
-                                {processingExpanded ? (
-                                    <ChevronDown className="w-5 h-5 text-gray-400" />
-                                ) : (
-                                    <ChevronUp className="w-5 h-5 text-gray-400" />
-                                )}
-                            </button>
-
-                            {processingExpanded && (
-                                <div
-                                    className="px-6 pb-4"
-                                    onClick={() => navigate("/order/2324")}
-                                >
-                                    <div className="space-y-4">
-                                        {orders.map((order, index) => (
-                                            <div
-                                                key={index}
-                                                className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0"
-                                            >
-                                                <div className="flex items-center space-x-4">
-                                                    {getOrderImage(order)}
-                                                    <div>
-                                                        <div className="font-medium text-gray-900 text-sm">
-                                                            Order ID: {order.id}
-                                                        </div>
-                                                        <div className="text-gray-600 text-sm">
-                                                            {order.description}
-                                                        </div>
-                                                        <div className="font-semibold text-gray-900 text-sm mt-1">
-                                                            {order.price}
-                                                        </div>
+                                <div className="space-y-4">
+                                    {orders.map((order, index) => (
+                                        <div
+                                            key={index}
+                                            className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0"
+                                        >
+                                            <div className="flex items-center space-x-4">
+                                                {getOrderImage(order)}
+                                                <div>
+                                                    <div className="font-medium text-gray-900 text-sm">
+                                                        Order ID: {order.id}
+                                                    </div>
+                                                    <div className="text-gray-600 text-sm">
+                                                        {order.description}
+                                                    </div>
+                                                    <div className="font-semibold text-gray-900 text-sm mt-1">
+                                                        {order.price}
                                                     </div>
                                                 </div>
-                                                <div>
-                                                    {getStatusBadge(
-                                                        order.status
-                                                    )}
-                                                </div>
                                             </div>
-                                        ))}
-                                    </div>
-
-                                    <div className="mt-6 text-center">
-                                        <button className="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm">
-                                            View More
-                                            <ArrowRight className="w-4 h-4 ml-1" />
-                                        </button>
-                                    </div>
+                                            <div>
+                                                {getStatusBadge(order.status)}
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                            )}
-                        </div>
 
-                        {/* Cancelled Orders Section */}
-                        <div>
-                            <button
-                                onClick={() =>
-                                    setCancelledExpanded(!cancelledExpanded)
-                                }
-                                className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50"
-                            >
-                                <span className="font-medium text-gray-900">
-                                    Cancelled Orders
-                                </span>
-                                {cancelledExpanded ? (
-                                    <ChevronDown className="w-5 h-5 text-gray-400" />
-                                ) : (
-                                    <ChevronUp className="w-5 h-5 text-gray-400" />
-                                )}
-                            </button>
-
-                            {cancelledExpanded && (
-                                <div className="px-6 pb-4">
-                                    <div className="text-center py-8 text-gray-500">
-                                        No cancelled orders found.
-                                    </div>
+                                <div className="mt-6 text-center">
+                                    <button className="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm">
+                                        View More
+                                        <ArrowRight className="w-4 h-4 ml-1" />
+                                    </button>
                                 </div>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Cancelled Orders Section */}
+                    <div>
+                        <button
+                            onClick={() =>
+                                setCancelledExpanded(!cancelledExpanded)
+                            }
+                            className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50"
+                        >
+                            <span className="font-medium text-gray-900">
+                                Cancelled Orders
+                            </span>
+                            {cancelledExpanded ? (
+                                <ChevronDown className="w-5 h-5 text-gray-400" />
+                            ) : (
+                                <ChevronUp className="w-5 h-5 text-gray-400" />
                             )}
-                        </div>
+                        </button>
+
+                        {cancelledExpanded && (
+                            <div className="px-6 pb-4">
+                                <div className="text-center py-8 text-gray-500">
+                                    No cancelled orders found.
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
-        </div>
+        </SettingsWrapper>
     );
 }

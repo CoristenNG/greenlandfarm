@@ -1,12 +1,13 @@
 // components/ProtectedRoute.jsx
 import React from "react";
-import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { isAuthenticated } from "../redux/api/axiosBaseQuery";
 
 const ProtectedRoute = ({ children }) => {
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const isAuth = isAuthenticated();
+    console.log(isAuth);
 
-    return isAuthenticated ? children : <Navigate to="/login" replace />;
+    return isAuth ? children : <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoute;

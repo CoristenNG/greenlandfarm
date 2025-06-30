@@ -1,8 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useResendOtpMutation } from "../../redux/slices/authSlice";
 
-export default function OTPVerification() {
+export default function OTPVerification({
+    email,
+    hideTerms,
+    onSubmit,
+    isLoading: initialLoading = false,
+}) {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [resendOtp, { isLoading: isResending }] = useResendOtpMutation();
+    const [isLoading, setIsLoading] = useState(initialLoading);
+    const [resending, setResending] = useState(isResending);
     const inputRefs = useRef([]);
 
     useEffect(() => {
@@ -52,11 +60,23 @@ export default function OTPVerification() {
 
     const handleResend = () => {
         // Simulate resend action
-        alert("New verification code sent to your email!");
+        if (isResending || isLoading) return;
+        setResending(true);
+        resendOtp(email)
+            .unwrap()
+            .then(() => {
+                setResending(false);
+            })
+            .catch((error) => {
+                console.error("Failed to resend OTP:", error);
+                alert("Failed to resend OTP. Please try again later.");
+                setResending(false);
+            });
     };
 
     const handleVerify = () => {
         const otpValue = otp.join("");
+        console.log(email);
         if (otpValue.length !== 6) {
             alert("Please enter all 6 digits");
             return;
@@ -64,16 +84,13 @@ export default function OTPVerification() {
 
         setIsLoading(true);
         // Simulate verification process
-        setTimeout(() => {
-            setIsLoading(false);
-            alert(`Verification successful! Code: ${otpValue}`);
-        }, 2000);
+        onSubmit(otpValue);
     };
 
     const isComplete = otp.every((digit) => digit !== "");
 
     return (
-        <div className="min-h-fit  flex items-center justify-center p-4">
+        <div className="min-h-fit  flex items-center justify-center p-4 z-50">
             <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
                 {/* Header */}
                 <div className="text-center mb-8">
@@ -110,17 +127,19 @@ export default function OTPVerification() {
                 </div>
 
                 {/* Resend Code */}
-                <div className="text-center mb-6">
-                    <span className="text-gray-500 text-sm">
-                        Can't see the code??{" "}
-                    </span>
-                    <button
-                        onClick={handleResend}
-                        className="text-green-600 text-sm font-medium hover:text-green-700 transition-colors duration-200"
-                    >
-                        Resend
-                    </button>
-                </div>
+                {!resending && (
+                    <div className="text-center mb-6">
+                        <span className="text-gray-500 text-sm">
+                            Can't see the code??{" "}
+                        </span>
+                        <button
+                            onClick={handleResend}
+                            className="text-green-600 text-sm font-medium hover:text-green-700 transition-colors duration-200"
+                        >
+                            Resend
+                        </button>
+                    </div>
+                )}
 
                 {/* Verify Button */}
                 <button
@@ -137,30 +156,34 @@ export default function OTPVerification() {
                             <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
                             Verifying...
                         </div>
+                    ) : resending ? (
+                        "Resending..."
                     ) : (
                         "Verify"
                     )}
                 </button>
 
                 {/* Terms and Privacy */}
-                <div className="text-center mt-6">
-                    <p className="text-xs text-gray-500 leading-relaxed">
-                        By continuing, you agree to Urban Lagos's{" "}
-                        <a
-                            href="#"
-                            className="text-green-600 hover:text-green-700 underline"
-                        >
-                            Terms of Service
-                        </a>{" "}
-                        and acknowledge that you've read our{" "}
-                        <a
-                            href="#"
-                            className="text-green-600 hover:text-green-700 underline"
-                        >
-                            Privacy Policy
-                        </a>
-                    </p>
-                </div>
+                {!hideTerms && (
+                    <div className="text-center mt-6">
+                        <p className="text-xs text-gray-500 leading-relaxed">
+                            By continuing, you agree to Urban Lagos's{" "}
+                            <a
+                                href="#"
+                                className="text-green-600 hover:text-green-700 underline"
+                            >
+                                Terms of Service
+                            </a>{" "}
+                            and acknowledge that you've read our{" "}
+                            <a
+                                href="#"
+                                className="text-green-600 hover:text-green-700 underline"
+                            >
+                                Privacy Policy
+                            </a>
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
     );
