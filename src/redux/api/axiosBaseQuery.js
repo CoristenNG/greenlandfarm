@@ -1,19 +1,20 @@
+/* eslint-disable no-undef */
 // utils/axiosBaseQuery.js
 
 import { jwtDecode } from 'jwt-decode';
 import toast from 'react-hot-toast';
 
 export const server = process.env.NODE_ENV === "production" 
-    ? "https://corislo-backend.onrender.com" 
+    ? "https://greenlandfarm.onrender.com" 
     : "http://localhost:5001";
 
 
-const handleAuthError = () => {
-    localStorage.removeItem("store_token");
-    localStorage.removeItem("refresh_token");
-    localStorage.removeItem("user_data");
-    window.location.href = "/login";
-};
+// const handleAuthError = () => {
+//     localStorage.removeItem("store_token");
+//     localStorage.removeItem("refresh_token");
+//     localStorage.removeItem("user_data");
+//     window.location.href = "/login";
+// };
 
 const getAuthHeaders = async () => {
     const token = localStorage.getItem("user_token");
@@ -23,33 +24,33 @@ const getAuthHeaders = async () => {
     };
 };
 
-const showErrorToast = (error, response) => {
-    const status = response?.status;
-    const serverMessage = response?.data?.message || error.message;
+// const showErrorToast = (error, response) => {
+//     const status = response?.status;
+//     const serverMessage = response?.data?.message || error.message;
 
-    if (status === 401 || status === 403) {
-        toast.error("Your session has expired. Please log in again.");
-        return;
-    }
+//     if (status === 401 || status === 403) {
+//         toast.error("Your session has expired. Please log in again.");
+//         return;
+//     }
 
-    if (status >= 400 && status < 500) {
-        toast.error(serverMessage || "Please check your input and try again.");
-        return;
-    }
+//     if (status >= 400 && status < 500) {
+//         toast.error(serverMessage || "Please check your input and try again.");
+//         return;
+//     }
 
-    if (status >= 500) {
-        toast.error("Server error. Please try again later.");
-        return;
-    }
+//     if (status >= 500) {
+//         toast.error("Server error. Please try again later.");
+//         return;
+//     }
 
-    // Network or other errors
-    if (!response) {
-        toast.error("Unable to connect. Please check your internet connection.");
-        return;
-    }
+//     // Network or other errors
+//     if (!response) {
+//         toast.error("Unable to connect. Please check your internet connection.");
+//         return;
+//     }
 
-    toast.error(serverMessage || "Something went wrong. Please try again.");
-};
+//     toast.error(serverMessage || "Something went wrong. Please try again.");
+// };
 
 // Show success message if available
 const showSuccessToast = (data) => {
@@ -67,7 +68,6 @@ export const axiosBaseQuery = () => async (requestConfig) => {
         data,
         params,
         headers = {},
-        skipErrorHandling = false,
         skipSuccessToast = false,
     } = requestConfig;
 
